@@ -30,10 +30,34 @@
                 }else{
                     return $categories;
                 }
-
         }
 
 
+        public function getCategoryById($id){
+
+            $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($id);
+            if ($category != null){
+                $cat['id'] = $category->getId();
+                $cat['categoryName'] = $category->getCategoryName();
+            }else{
+                echo "Category Not Found";
+                die();
+            }
+            return $cat;
+
+        }
+
+        public function updateCategory($post){
+
+            $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($post['id']);
+            if ($category != null){
+                $category->setCategoryName($post['categoryName']);
+                $this->getEntityManager()->flush();
+            }
+            return true;
+
+
+        }
 
     }
 
