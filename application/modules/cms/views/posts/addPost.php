@@ -10,16 +10,16 @@
            </div>
            <div class="form-group">
                <label for="postBody">Post Description</label>
-               <input type="textarea" class="form-control" id="postBody" name="postBody" required>
+               <textarea name="postBody" class="form-control" rows="8" cols="80"></textarea>
            </div>
            <div class="form-group">
                <label for="categories">Category</label>
-               <select class="selectpicker" name="categories" value"">
-                   <option value="1">Sports</option>
-                   <option value="2">Finance</option>
-                   <!-- <?php if( !empty($categories)) foreach ($categories as $category) { ?>
-                        <option value="<?php echo $category->id; ?>"> <?php echo $category->categoryName; ?> </option>
-                    <?php } ?> -->
+               <select class="form-control" name="categories" value"">
+                   <!-- <option value="1">Sports</option>
+                   <option value="2">Finance</option> -->
+                   <?php if( !empty($categories)) foreach ($categories as $category) { ?>
+                        <option value="<?php echo $category['id']; ?>"> <?php echo $category['categoryName']; ?> </option>
+                    <?php } ?>
                </select>
            </div>
            <div class="form-group">

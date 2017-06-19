@@ -1,5 +1,5 @@
 <?php require_once(APPPATH."modules/cms/views/header.php"); ?>
-<h3>Contact List</h3>
+<h3>Categories</h3>
 <hr>
 <br>
   <div class="row">

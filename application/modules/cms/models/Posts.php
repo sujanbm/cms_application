@@ -2,6 +2,7 @@
 
   namespace cms\models;
   use Doctrine\ORM\Mapping as ORM;
+  use cms\models\Categories;
 
   /**
   *Posts
@@ -99,8 +100,7 @@
 
     public function setCreatedAt(){
 
-      date_default_timezone_set('Asia/Kathmandu');
-      $this->createdAt = date('m/d/Y h:i:s a', time());
+      $this->createdAt = new \DateTime();
 
     }
 
@@ -112,17 +112,16 @@
 
     public function setUpdatedAt(){
 
-      date_default_timezone_set('Asia/Kathmandu');
-      $this->updatedAt = date('m/d/Y h:i:s a', time());
+      $this->createdAt = new \DateTime();
     }
 
     public function getCategories(){
 
-      return $this->categories;
-
+        return $this->categories;
     }
 
-    public function setCategories($categories){
+
+    public function setCategories(Categories $categories){
 
       $this->categories = $categories;
 

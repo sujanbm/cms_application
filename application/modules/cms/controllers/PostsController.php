@@ -1,36 +1,34 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+use Doctrine\ORM\EntityRepository;
+use cms\models\Categories;
+use cms\models\Posts;
 class PostsController extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function index()
 	{
-		echo "<h1>This is Posts</h1>";
+
+		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
+		$this->load->view('posts/viewPost', $posts);
 	}
 
 	public function createPost(){
-
-		$this->load->view('posts/addPost');
+		$category['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
+		$this->load->view('posts/addPost', $category);
 
 	}
 
 	public function addPost(){
+		$post = new Posts();
+		$post->setPostTitle($this->input->post('postTitle'));
+		$post->setPostBody($this->input->post('postBody'));
+		$post->setCreatedAt();
+		$post->setCategories($this->doctrine->em->getRepository('cms\models\Categories')->find($this->input->post('categories')));
 
+		$this->doctrine->em->persist($post);
+		$this->doctrine->em->flush();
+
+		redirect(site_url('cms/posts'));
 
 
 	}
