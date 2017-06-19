@@ -7,7 +7,7 @@ class PostsController extends CI_Controller {
 
 	public function index()
 	{
-
+		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
 		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
 		$this->load->view('posts/viewPost', $posts);
 	}
@@ -35,18 +35,30 @@ class PostsController extends CI_Controller {
 
 	public function editPost($id){
 
-		$this->load->view('posts/editPost');
+		$post = $this->doctrine->em->getRepository('cms\models\Posts')->getPostById($id);
+		$post['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
+		$this->load->view('posts/editPost', $post);
 
 	}
 
 	public function updatePost(){
 
+		if($this->doctrine->em->getRepository('cms\models\Posts')->updatePost($this->input->post())){
+			redirect(site_url('cms/posts'));
+		}else{
+			redirect(site_url('cms/posts/editPost'). $this->input->post('id'));
+		}
 
 
 	}
 
 	public function deletePost($id){
 
+		$post = $this->doctrine->em->getRepository('cms\models\Posts')->find($id);
+		$this->doctrine->em->remove($post);
+		$this->doctrine->em->flush();
+
+		redirect(site_url('cms/posts'));
 
 
 	}

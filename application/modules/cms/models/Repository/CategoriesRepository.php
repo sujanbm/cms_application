@@ -67,15 +67,24 @@
                 foreach($posts as $post){
                     $c['id'] = $post->getId();
                     $c['categoryName'] = $category->getCategoryName();
+
                     $c['postTitle'] = $post->getPostTitle();
                     $c['postBody'] = $post->getPostBody();
                     $c['createdAt'] = $post->getCreatedAt();
-                    $c['updatedAt'] = $post->getUpdatedAt();
+                    if($post->getUpdatedAt() != null){
+                      $c['updatedAt'] = $post->getUpdatedAt()->format('Y-m-d H:i:s');
+                  }else {
+                      $c['updatedAt'] = $post->getUpdatedAt();
+                  }
                     $p[] = $c;
                 }
+                if (!empty($p)){
                 return $p;
+                }else{
+                    return $posts;
+                }
             }else{
-                $category;
+                redirect(site_url('cms/categories'));
             }
 
         }

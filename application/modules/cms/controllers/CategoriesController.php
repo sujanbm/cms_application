@@ -5,31 +5,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class CategoriesController extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function index(){
 
-		$categories['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
+		$categories['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
 		$this->load->view('categories/viewCategories', $categories);
 
 	}
 
 	public function createCategory(){
-
-		$this->load->view('categories/addCategories');
+		$category['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
+		$this->load->view('categories/addCategories', $category);
 
 	}
 
@@ -47,6 +32,7 @@ class CategoriesController extends CI_Controller {
 	public function editCategory($id){
 
 		$category = $this->doctrine->em->getRepository('cms\models\Categories')->getCategoryById($id);
+		$category['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
 		$this->load->view('categories/editCategory', $category);
 
 	}
@@ -61,9 +47,18 @@ class CategoriesController extends CI_Controller {
 	}
 
 	public function posts($id){
-
+		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
 		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getPostsByCategory($id);
 		$this->load->view('categories/viewPosts', $posts);
 
 	}
+
+	// public function deleteCategory($id){
+	//
+	// 	$category = $this->doctrine->em->getRepository('cms\models\Categories')->find($id);
+	// 	$this->doctrine->em->remove($category);
+	// 	$this->doctrine->em->flush();
+	//
+	// 	redirect(site_url('cms/categories'));
+	// }
 }

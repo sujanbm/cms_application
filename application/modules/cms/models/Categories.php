@@ -32,6 +32,14 @@
 
     private $categoryName;
 
+    // /**
+    // * @var boolean $status
+    // *
+    // * @ORM\Column(name="status", type="boolean", nullable=false)
+    // */
+    //
+    // private $status;
+
     /**
      * One Category has Many Posts.
      * @ORM\OneToMany(targetEntity="Posts", mappedBy="categories")
@@ -64,7 +72,7 @@
     }
 
     // public function setPosts($id){
-    // 
+    //
     //   $this->posts = $id;
     //
     // }

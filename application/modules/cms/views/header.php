@@ -12,18 +12,28 @@
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="<?php echo site_url('cms/posts'); ?>">Posts</a>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="<?php echo site_url('cms/posts/createPost/') ?>">Create Post <span class="sr-only"></span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="<?php echo site_url('cms/categories/createCategory/') ?>">Create Categories</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+          <a class="nav-link" href="<?php echo site_url('cms/categories/') ?>">All Categories</a>
         </li>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Categories
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <?php foreach ($categories as $category): ?>
+                <a class="dropdown-item" href="<?php echo site_url('cms/categories/posts/') . $category['id'] ?>"><?php echo $category['categoryName'] ?></a>
+            <?php endforeach; ?>
+        </div>
+      </li>
       </ul>
     </div>
   </nav>

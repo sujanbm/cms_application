@@ -32,9 +32,9 @@
     private $postTitle;
 
     /**
-    * @var string $postBody
+    * @var text $postBody
     *
-    * @ORM\Column(name="postBody", type="string", length=255, nullable=false)
+    * @ORM\Column(name="postBody", type="text", nullable=false)
     */
 
     private $postBody;
@@ -112,7 +112,7 @@
 
     public function setUpdatedAt(){
 
-      $this->createdAt = new \DateTime();
+      $this->updatedAt = new \DateTime();
     }
 
     public function getCategories(){
