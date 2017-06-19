@@ -59,4 +59,11 @@ class CategoriesController extends CI_Controller {
 			redirect(site_url('cms/categories/editCategory/').$this->input->post('id'));
 		}
 	}
+
+	public function posts($id){
+
+		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getPostsByCategory($id);
+		$this->load->view('categories/viewPosts', $posts);
+
+	}
 }

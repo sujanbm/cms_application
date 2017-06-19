@@ -59,6 +59,27 @@
 
         }
 
+        public function getPostsByCategory($id){
+
+            $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($id);
+            if ($category != null){
+                $posts = $category->getPosts();
+                foreach($posts as $post){
+                    $c['id'] = $post->getId();
+                    $c['categoryName'] = $category->getCategoryName();
+                    $c['postTitle'] = $post->getPostTitle();
+                    $c['postBody'] = $post->getPostBody();
+                    $c['createdAt'] = $post->getCreatedAt();
+                    $c['updatedAt'] = $post->getUpdatedAt();
+                    $p[] = $c;
+                }
+                return $p;
+            }else{
+                $category;
+            }
+
+        }
+
     }
 
 

@@ -3,6 +3,7 @@
   namespace cms\models;
   use Doctrine\ORM\Mapping as ORM;
   use Doctrine\Common\Collections\ArrayCollection;
+  use cms\models\Posts;
 
   /**
   * Categories
@@ -62,11 +63,11 @@
 
     }
 
-    public function setPosts($id){
-
-      $this->posts = $id;
-
-    }
+    // public function setPosts($id){
+    // 
+    //   $this->posts = $id;
+    //
+    // }
 
     public function getPosts(){
 

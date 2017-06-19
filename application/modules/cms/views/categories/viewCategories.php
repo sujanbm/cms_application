@@ -13,7 +13,7 @@
            <tr>
                <td><?php echo $category['categoryName']; ?></td>
                <td>
-                    <a href="<?php echo site_url('cms/categories/viewPosts/') . $category['id'] ?>"><button type="button" class="btn btn-alert">Posts</button></a>
+                    <a href="<?php echo site_url('cms/categories/posts/') . $category['id'] ?>"><button type="button" class="btn btn-alert">Posts</button></a>
                     <a href="<?php echo site_url('cms/categories/editCategory/') . $category['id'] ?>"><button type="button" class="btn btn-primary">Edit</button></a>
                     <a href="<?php echo site_url('cms/categories/deleteCategory/') . $category['id']?>"><button type="button" class="btn btn-danger" onclick="return confirm('Are you sure want to delete');">Delete</button></a>
                </td>

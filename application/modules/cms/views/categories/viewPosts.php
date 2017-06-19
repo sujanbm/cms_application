@@ -5,9 +5,9 @@
   <div class="row">
    <table class="table table-bordered">
        <tr>
+           <th>Category</th>
            <th>Title</th>
            <th>Body</th>
-           <th>Category</th>
            <th>Created At</th>
            <th>Updated At</th>
            <th>Actions</th>
@@ -15,9 +15,9 @@
        </tr>
        <?php foreach ($list as $post): ?>
            <tr>
+               <td><?php echo $post['categoryName'];?></td>
                <td><?php echo $post['postTitle']; ?></td>
                <td><?php echo $post['postBody']; ?></td>
-               <td><?php echo $post['categories'] ?></td>
                <td><?php echo $post['createdAt']?></td>
                <td><?php echo $post['updatedAt']?></td>
                <td>

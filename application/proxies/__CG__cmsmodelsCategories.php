@@ -213,17 +213,6 @@ class Categories extends \cms\models\Categories implements \Doctrine\ORM\Proxy\P
     /**
      * {@inheritDoc}
      */
-    public function setPosts($id)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPosts', [$id]);
-
-        return parent::setPosts($id);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getPosts()
     {
 
