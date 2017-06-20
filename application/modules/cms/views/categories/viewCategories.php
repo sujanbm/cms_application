@@ -16,7 +16,7 @@
                <td>
                     <a href="<?php echo site_url('cms/categories/posts/') . $category['id'] ?>"><button type="button" class="btn btn-primary">View Posts</button></a>
                     <a href="<?php echo site_url('cms/categories/editCategory/') . $category['id'] ?>"><button type="button" class="btn btn-danger">Edit</button></a>
-                    <!-- <a href="<?php echo site_url('cms/categories/deleteCategory/') . $category['id']?>"><button type="button" class="btn btn-danger" onclick="return confirm('Are you sure want to delete');">Delete</button></a> -->
+                    <a href="<?php echo site_url('cms/categories/deleteCategory/') . $category['id']?>"><button type="button" class="btn btn-danger" onclick="return confirm('Are you sure want to delete');">Delete</button></a>
                </td>
 
            </tr>

@@ -89,6 +89,26 @@
 
         }
 
+        public function deleteCategory($id){
+
+            $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($id);
+            if ($category != null){
+                $posts = $category->getPosts();
+                foreach($posts as $post){
+                    $c['id'] = $post->getId();
+                    $p[] = $c;
+                }
+                if (!empty($p)){
+                    return false;
+            }else{
+                // $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($id);
+                $this->getEntityManager()->remove($category);
+                $this->getEntityManager()->flush();
+                return true;
+            }
+        }
+        }
+
     }
 
 

@@ -53,12 +53,12 @@ class CategoriesController extends CI_Controller {
 
 	}
 
-	// public function deleteCategory($id){
-	//
-	// 	$category = $this->doctrine->em->getRepository('cms\models\Categories')->find($id);
-	// 	$this->doctrine->em->remove($category);
-	// 	$this->doctrine->em->flush();
-	//
-	// 	redirect(site_url('cms/categories'));
-	// }
+	public function deleteCategory($id){
+		if ($this->doctrine->em->getRepository('cms\models\Categories')->deleteCategory($id)){
+				redirect(site_url('cms/categories'));
+		}else{
+			redirect(site_url('cms/categories'));
+		}
+
+	}
 }
