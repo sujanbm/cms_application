@@ -64,6 +64,7 @@
             $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($id);
             if ($category != null){
                 $posts = $category->getPosts();
+                if ($posts->count() > 0){
                 foreach($posts as $post){
                     $c['id'] = $post->getId();
                     $c['categoryName'] = $category->getCategoryName();
@@ -78,7 +79,6 @@
                   }
                     $p[] = $c;
                 }
-                if (!empty($p)){
                 return $p;
                 }else{
                     return $posts;
@@ -93,15 +93,10 @@
 
             $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($id);
             if ($category != null){
-                $posts = $category->getPosts();
-                foreach($posts as $post){
-                    $c['id'] = $post->getId();
-                    $p[] = $c;
-                }
-                if (!empty($p)){
+                if ($category->getPosts()->count() > 0){
                     return false;
             }else{
-                // $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($id);
+                $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($id);
                 $this->getEntityManager()->remove($category);
                 $this->getEntityManager()->flush();
                 return true;
