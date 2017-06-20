@@ -30,7 +30,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <?php foreach ($categories as $category): ?>
-                <a class="dropdown-item" href="<?php echo site_url('cms/categories/posts/') . $category['id'] ?>"><?php echo $category['categoryName'] ?></a>
+                <a class="dropdown-item" href="<?php echo site_url('cms/categories/posts/') . $category->getId() ?>"><?php echo $category->getCategoryName();?></a>
             <?php endforeach; ?>
         </div>
       </li>

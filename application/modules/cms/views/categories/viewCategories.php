@@ -12,12 +12,12 @@
        </tr>
        <?php foreach ($list as $category): ?>
            <tr>
-               <td><?php echo $category['categoryName']; ?></td>
+               <td><?php echo $category->getCategoryName(); ?></td>
                <td>
-                    <a href="<?php echo site_url('cms/categories/posts/') . $category['id'] ?>"><button type="button" class="btn btn-primary">View Posts</button></a>
-                    <a href="<?php echo site_url('cms/categories/subCategories/') . $category['id'] ?>"><button type="button" class="btn btn-primary">View Sub Categories</button></a>
-                    <a href="<?php echo site_url('cms/categories/editCategory/') . $category['id'] ?>"><button type="button" class="btn btn-danger">Edit</button></a>
-                    <a href="<?php echo site_url('cms/categories/deleteCategory/') . $category['id']?>"><button type="button" class="btn btn-danger" onclick="return confirm('Are you sure want to delete');">Delete</button></a>
+                    <a href="<?php echo site_url('cms/categories/posts/') . $category->getId() ?>"><button type="button" class="btn btn-primary">View Posts</button></a>
+                    <a href="<?php echo site_url('cms/categories/subCategories/') . $category->getId() ?>"><button type="button" class="btn btn-primary">View Sub Categories</button></a>
+                    <a href="<?php echo site_url('cms/categories/editCategory/') . $category->getId() ?>"><button type="button" class="btn btn-danger">Edit</button></a>
+                    <a href="<?php echo site_url('cms/categories/deleteCategory/') . $category->getId() ?>"><button type="button" class="btn btn-danger" onclick="return confirm('Are you sure want to delete');">Delete</button></a>
                </td>
 
            </tr>

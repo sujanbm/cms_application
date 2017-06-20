@@ -33,8 +33,14 @@
     private $categoryName;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity="Categories", mappedBy="subCategory")
+     */
+    private $category;
+
+    /**
     *
-    *@ORM\ManyToOne(targetEntity="Categories")
+    *@ORM\ManyToOne(targetEntity="Categories", inversedBy="category")
     *@ORM\JoinColumn(name="subCategoryId", referencedColumnName="id", nullable=true)
     */
     private $subCategory;
@@ -58,6 +64,7 @@
     public function __construct() {
 
         $this->posts = new ArrayCollection();
+        $this->category = new ArrayCollection();
 
     }
 
@@ -100,6 +107,12 @@
 
       return $this->posts;
 
+    }
+
+    public function getCategory(){
+
+        return $this->category;
+        
     }
 
   }
