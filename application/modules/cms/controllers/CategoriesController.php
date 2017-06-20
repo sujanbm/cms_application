@@ -8,6 +8,7 @@ class CategoriesController extends CI_Controller {
 	public function index(){
 
 		$categories['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
+		$categories['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
 		$this->load->view('categories/viewCategories', $categories);
 
 	}
@@ -22,6 +23,7 @@ class CategoriesController extends CI_Controller {
 
 		$category = new Categories();
 		$category->setCategoryName($this->input->post('categoryName'));
+		$category->setSubCategory($this->doctrine->em->getRepository('cms\models\Categories')->find($this->input->post('subCategoryId')));
 		$this->doctrine->em->persist($category);
 		$this->doctrine->em->flush();
 		$this->session->set_flashdata('message', 'Category Added!');
@@ -73,5 +75,25 @@ class CategoriesController extends CI_Controller {
 				redirect(site_url('cms/categories/'));
 			}
 
+	}
+
+	public function subCategories($id){
+
+		$categ = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => $id ));
+		if ($categ != null){
+			foreach ($categ as $category) {
+			  $cat['id'] = $category->getId();
+			  $cat['categoryName'] = $category->getCategoryName();
+			  $cate[] = $cat;
+			}
+			$catg['list'] = $cate;
+			$catg['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
+
+			$this->load->view('categories/viewCategories', $catg);
+
+		}else{
+			$this->session->set_flashdata('errorMessage', 'No Sub Categories exist!');
+			redirect(site_url('cms/categories'));
+		}
 	}
 }

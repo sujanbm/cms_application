@@ -10,7 +10,7 @@
 
         public function getAllCategories(){
 
-                $categories = $this->getEntityManager()->getRepository('cms\models\Categories')->findAll();
+                $categories = $this->getEntityManager()->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
                 if ($categories != null){
                     foreach ($categories as $category) {
                       $cat['id'] = ($category->getId());
@@ -31,11 +31,10 @@
             if ($category != null){
                 $cat['id'] = $category->getId();
                 $cat['categoryName'] = $category->getCategoryName();
+                return $cat;
             }else{
-                echo "Category Not Found";
-                die();
+                redirect(site_url('cms/categories'));
             }
-            return $cat;
 
         }
 
@@ -44,6 +43,7 @@
             $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($post['id']);
             if ($category != null){
                 $category->setCategoryName($post['categoryName']);
+                $category->setSubCategory($this->getEntityManager()->getRepository('cms\models\Categories')->find($post['subCategoryId']));
                 $this->getEntityManager()->flush();
             }
             return true;

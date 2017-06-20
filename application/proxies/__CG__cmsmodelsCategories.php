@@ -64,10 +64,10 @@ class Categories extends \cms\models\Categories implements \Doctrine\ORM\Proxy\P
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'id', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'categoryName', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'posts'];
+            return ['__isInitialized__', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'id', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'categoryName', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'subCategory', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'posts'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'id', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'categoryName', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'posts'];
+        return ['__isInitialized__', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'id', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'categoryName', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'subCategory', '' . "\0" . 'cms\\models\\Categories' . "\0" . 'posts'];
     }
 
     /**
@@ -208,6 +208,28 @@ class Categories extends \cms\models\Categories implements \Doctrine\ORM\Proxy\P
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCategoryName', []);
 
         return parent::getCategoryName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setSubCategory($id)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSubCategory', [$id]);
+
+        return parent::setSubCategory($id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSubCategory()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSubCategory', []);
+
+        return parent::getSubCategory();
     }
 
     /**

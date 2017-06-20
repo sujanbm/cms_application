@@ -32,6 +32,14 @@
 
     private $categoryName;
 
+    /**
+    *
+    *@ORM\ManyToOne(targetEntity="Categories")
+    *@ORM\JoinColumn(name="subCategoryId", referencedColumnName="id", nullable=true)
+    */
+    private $subCategory;
+
+
     // /**
     // * @var boolean $status
     // *
@@ -69,6 +77,17 @@
 
       return $this->categoryName;
 
+    }
+
+    public function setSubCategory($id){
+
+        $this->subCategory = $id;
+
+    }
+
+    public function getSubCategory(){
+
+        return $this->subCategory;
     }
 
     // public function setPosts($id){

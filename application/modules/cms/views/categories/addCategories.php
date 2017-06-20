@@ -9,6 +9,15 @@
                <input type="text" class="form-control" id="categoryName" name="categoryName" required>
            </div>
            <div class="form-group">
+               <label for="subCategoryId"></label>
+               <select class="form-control" name="subCategoryId" value"">
+                   <option value="">Null</option>
+                   <?php if( !empty($categories)) foreach ($categories as $category) { ?>
+                        <option value="<?php echo $category['id']; ?>"> <?php echo $category['categoryName']; ?> </option>
+                    <?php } ?>
+               </select>
+           </div>
+           <div class="form-group">
                <button class="btn btn-success">Save</button>
            </div>
        </form>
