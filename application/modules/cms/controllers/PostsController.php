@@ -19,6 +19,7 @@ class PostsController extends CI_Controller {
 	}
 
 	public function addPost(){
+
 		$post = new Posts();
 		$post->setPostTitle($this->input->post('postTitle'));
 		$post->setPostBody($this->input->post('postBody'));
@@ -27,7 +28,7 @@ class PostsController extends CI_Controller {
 
 		$this->doctrine->em->persist($post);
 		$this->doctrine->em->flush();
-
+		$this->session->set_flashdata('message', 'Post succesfully added!');
 		redirect(site_url('cms/posts'));
 
 
@@ -44,8 +45,10 @@ class PostsController extends CI_Controller {
 	public function updatePost(){
 
 		if($this->doctrine->em->getRepository('cms\models\Posts')->updatePost($this->input->post())){
+			$this->session->set_flashdata('message', 'The Post has been updated!');
 			redirect(site_url('cms/posts'));
 		}else{
+			$this->session->set_flashdata('errorMessage', 'Error Occured!');
 			redirect(site_url('cms/posts/editPost'). $this->input->post('id'));
 		}
 
@@ -55,11 +58,15 @@ class PostsController extends CI_Controller {
 	public function deletePost($id){
 
 		$post = $this->doctrine->em->getRepository('cms\models\Posts')->find($id);
-		$this->doctrine->em->remove($post);
-		$this->doctrine->em->flush();
-
-		redirect(site_url('cms/posts'));
-
+		if ($post != null){
+			$this->session->set_flashdata('deleteMessage', 'The Post ' .$post->getPostTitle(). ' has been deleted!');
+			$this->doctrine->em->remove($post);
+			$this->doctrine->em->flush();
+			redirect(site_url('cms/posts'));
+		}else{
+			$this->session->set_flashdata('errorMessage', 'The post does not exist!');
+			redirect(site_url('cms/posts'));
+		}
 
 	}
 }

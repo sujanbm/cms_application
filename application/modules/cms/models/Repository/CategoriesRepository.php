@@ -10,16 +10,8 @@
 
         public function getAllCategories(){
 
-            try {
                 $categories = $this->getEntityManager()->getRepository('cms\models\Categories')->findAll();
-
-                }
-                catch(\Exception $err){
-
-                    die($err->getMessage());
-                }
                 if ($categories != null){
-
                     foreach ($categories as $category) {
                       $cat['id'] = ($category->getId());
                       $cat['categoryName'] = ($category->getCategoryName());
@@ -88,21 +80,23 @@
             }
 
         }
-
-        public function deleteCategory($id){
-
-            $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($id);
-            if ($category != null){
-                if ($category->getPosts()->count() > 0){
-                    return false;
-            }else{
-                $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($id);
-                $this->getEntityManager()->remove($category);
-                $this->getEntityManager()->flush();
-                return true;
-            }
-        }
-        }
+        //
+        // public function deleteCategory($id){
+        //
+        //     $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($id);
+        //     if ($category != null){
+        //         if ($category->getPosts()->count() > 0){
+        //             // $this->session->set_flashdata('errorMessage', 'The Category ' . $category->getCategoryName() . ' contains Posts and cannot be deleted');
+        //             return false;
+        //     }else{
+        //         // $this->session->set_flashdata('deleteMessage', 'The Category '. $category->getCategoryName() .' has been deleted');
+        //         $this->getEntityManager()->remove($category);
+        //         $this->getEntityManager()->flush();
+        //
+        //         return true;
+        //     }
+        // }
+        // }
 
     }
 

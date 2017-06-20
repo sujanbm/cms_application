@@ -24,7 +24,7 @@ class CategoriesController extends CI_Controller {
 		$category->setCategoryName($this->input->post('categoryName'));
 		$this->doctrine->em->persist($category);
 		$this->doctrine->em->flush();
-
+		$this->session->set_flashdata('message', 'Category Added!');
 		redirect(site_url('cms/categories'));
 
 	}
@@ -40,8 +40,10 @@ class CategoriesController extends CI_Controller {
 	public function updateCategory(){
 
 		if($this->doctrine->em->getRepository('cms\models\Categories')->updateCategory($this->input->post())){
+			$this->session->set_flashdata('message', 'Category Name Updated!');
 			redirect(site_url('cms/categories'));
 		}else{
+			$this->session->set_flashdata('errorMessage', 'Error Occured!');
 			redirect(site_url('cms/categories/editCategory/').$this->input->post('id'));
 		}
 	}
@@ -54,11 +56,22 @@ class CategoriesController extends CI_Controller {
 	}
 
 	public function deleteCategory($id){
-		if ($this->doctrine->em->getRepository('cms\models\Categories')->deleteCategory($id)){
-				redirect(site_url('cms/categories'));
-		}else{
-			redirect(site_url('cms/categories'));
-		}
+
+			$category = $this->doctrine->em->getRepository('cms\models\Categories')->find($id);
+			if ($category != null){
+				if ($category->getPosts()->count() > 0){
+					$this->session->set_flashdata('errorMessage', 'The Category ' . $category->getCategoryName() . ' contains Posts and cannot be deleted!');
+					redirect(site_url('cms/categories/'));
+				}else{
+					$this->session->set_flashdata('deleteMessage', 'The Category '. $category->getCategoryName() .' has been deleted!');
+					$this->doctrine->em->remove($category);
+					$this->doctrine->em->flush();
+					redirect(site_url('cms/categories/'));
+					}
+			}else{
+				$this->session->set_flashdata('errorMessage', 'The Category does not exist!');
+				redirect(site_url('cms/categories/'));
+			}
 
 	}
 }
