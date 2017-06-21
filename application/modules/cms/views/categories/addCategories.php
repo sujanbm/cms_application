@@ -15,13 +15,22 @@
                    <?php if( !empty($categories)) foreach ($categories as $category) { ?>
                         <option value="<?php echo $category->getId(); ?>"> <?php echo $category->getCategoryName(); ?> </option>
                             <?php if ($category->getCategory()->count() >0): ?>
-                                
-                                <?php foreach ($category->getCategory() as $value): ?>
-                                    <option value="<?php echo $value->getId(); ?>"> <?php echo " - - " . $value->getCategoryName(); ?> </option>
+
+                                <?php foreach ($category->getCategory() as $cat): ?>
+                                    <option value="<?php echo $cat->getId(); ?>"> <?php echo " - - " . $cat->getCategoryName(); ?> </option>
                                 <?php endforeach; ?>
 
                             <?php endif; ?>
                     <?php } ?>
+<!--
+                    <?php
+                        foreach($list as $category){ ?>
+                            <option value="<?php echo $category['id']; ?>"><?php echo $category['categoryName']; ?></option>
+                                <?php if($category['sub'] !=  null) foreach($category['sub'] as $subs){ ?>
+                                    <option value="<?php echo $subs['id']; ?>"><?php echo $subs['categoryName'] ;?></option>
+                                <?php }?>
+                        <?php }
+                    ?> -->
                </select>
            </div>
            <div class="form-group">

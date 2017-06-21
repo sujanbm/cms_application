@@ -80,6 +80,43 @@
             }
 
         }
+
+        public function getPosts($id){
+            $query = $this->getEntityManager()->createQuery("SELECT c FROM cms\models\Categories c WHERE (c.id = :id OR c.subCategory = :id)");
+            $query->setParameter('id', $id);
+            $result = $query->getResult();
+            if ($result != null){
+                foreach($result as $r){
+                    $posts = $r->getPosts();
+                    if ($posts->count() > 0){
+                        foreach($posts as $post){
+                                $c['id'] = $post->getId();
+                                $c['categoryName'] = $r->getCategoryName();
+
+                                $c['postTitle'] = $post->getPostTitle();
+                                $c['postBody'] = $post->getPostBody();
+                                $c['createdAt'] = $post->getCreatedAt();
+                                if($post->getUpdatedAt() != null){
+                                  $c['updatedAt'] = $post->getUpdatedAt()->format('Y-m-d H:i:s');
+                              }else {
+                                  $c['updatedAt'] = $post->getUpdatedAt();
+                              }
+                                $p[] = $c;
+                        }
+                    }
+                }
+                if (!empty($p)){
+                    return $p;
+                }
+                return $posts;
+            }else{
+                redirect(site_url('cms/categories'));
+            }
+        }
+
+
+
+
         //
         // public function deleteCategory($id){
         //

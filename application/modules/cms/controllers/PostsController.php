@@ -7,13 +7,13 @@ class PostsController extends CI_Controller {
 
 	public function index()
 	{
-		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
+		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null));
 		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
 		$this->load->view('posts/viewPost', $posts);
 	}
 
 	public function createPost(){
-		$category['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
+		$category['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null));
 		$this->load->view('posts/addPost', $category);
 
 	}
@@ -36,8 +36,8 @@ class PostsController extends CI_Controller {
 
 	public function editPost($id){
 
-		$post = $this->doctrine->em->getRepository('cms\models\Posts')->getPostById($id);
-		$post['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->getAllCategories();
+		$post['post'] = $this->doctrine->em->getRepository('cms\models\Posts')->find($id);
+		$post['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null));
 		$this->load->view('posts/editPost', $post);
 
 	}

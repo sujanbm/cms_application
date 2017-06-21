@@ -18,7 +18,14 @@
                    <!-- <option value="1">Sports</option>
                    <option value="2">Finance</option> -->
                    <?php if( !empty($categories)) foreach ($categories as $category) { ?>
-                        <option value="<?php echo $category['id']; ?>"> <?php echo $category['categoryName']; ?> </option>
+                        <option value="<?php echo $category->getId(); ?>"> <?php echo $category->getCategoryName(); ?> </option>
+                            <?php if ($category->getCategory()->count() >0): ?>
+
+                                <?php foreach ($category->getCategory() as $cat): ?>
+                                    <option value="<?php echo $cat->getId(); ?>"> <?php echo " - - " . $cat->getCategoryName(); ?> </option>
+                                <?php endforeach; ?>
+
+                            <?php endif; ?>
                     <?php } ?>
                </select>
            </div>
