@@ -9,28 +9,20 @@
                <input type="text" class="form-control" id="categoryName" name="categoryName" required>
            </div>
            <div class="form-group">
-               <label for="subCategoryId"></label>
+               <label for="subCategoryId">Parent Category</label>
                <select class="form-control" name="subCategoryId" value"">
                    <option value="">Null</option>
                    <?php if( !empty($categories)) foreach ($categories as $category) { ?>
                         <option value="<?php echo $category->getId(); ?>"> <?php echo $category->getCategoryName(); ?> </option>
-                            <?php if ($category->getCategory()->count() >0): ?>
+                            <!-- <?php if ($category->getCategory()->count() >0): ?>
 
                                 <?php foreach ($category->getCategory() as $cat): ?>
                                     <option value="<?php echo $cat->getId(); ?>"> <?php echo " - - " . $cat->getCategoryName(); ?> </option>
                                 <?php endforeach; ?>
 
-                            <?php endif; ?>
+                            <?php endif; ?> -->
                     <?php } ?>
-<!--
-                    <?php
-                        foreach($list as $category){ ?>
-                            <option value="<?php echo $category['id']; ?>"><?php echo $category['categoryName']; ?></option>
-                                <?php if($category['sub'] !=  null) foreach($category['sub'] as $subs){ ?>
-                                    <option value="<?php echo $subs['id']; ?>"><?php echo $subs['categoryName'] ;?></option>
-                                <?php }?>
-                        <?php }
-                    ?> -->
+
                </select>
            </div>
            <div class="form-group">
@@ -40,3 +32,13 @@
    </div>
 
 <?php require_once(APPPATH. 'modules/cms/views/footer.php'); ?>
+
+<!--
+                    <?php
+                        foreach($list as $category){ ?>
+                            <option value="<?php echo $category['id']; ?>"><?php echo $category['categoryName']; ?></option>
+                                <?php if($category['sub'] !=  null) foreach($category['sub'] as $subs){ ?>
+                                    <option value="<?php echo $subs['id']; ?>"><?php echo $subs['categoryName'] ;?></option>
+                                <?php }?>
+                        <?php }
+                    ?> -->

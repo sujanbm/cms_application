@@ -10,7 +10,7 @@
                </div>
                <?php if ($cat->getSubCategory() != null){ ?>
                    <div class="form-group">
-                       <label for="subCategoryId"></label>
+                       <label for="subCategoryId">Parent Category</label>
                        <select class="form-control" name="subCategoryId" value"">
                            <option value="">Null</option>
                            <?php if( !empty($categories)) foreach ($categories as $c) { ?>
