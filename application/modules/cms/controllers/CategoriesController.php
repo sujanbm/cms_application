@@ -66,7 +66,7 @@ class CategoriesController extends CI_Controller {
 	public function posts($id){
 		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
 		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getPosts($id);
-		$this->load->view('categories/viewPosts', $posts);
+		$this->load->view('posts/viewPost', $posts);
 
 	}
 

@@ -28,6 +28,9 @@
 
                </select>
            </div>
+           <div class="form-group">
+               <input type="file" name="file" id="file">
+           </div>
            <input type="hidden" name="id" value="<?php echo $post->getId(); ?>">
            <div class="form-group">
                <button class="btn btn-success">Save</button>

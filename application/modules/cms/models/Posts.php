@@ -56,6 +56,14 @@
     private $updatedAt;
 
     /**
+    * @var string $photoPath
+    *
+    * @ORM\Column(name="photoPath", type="string", length=100, nullable=true)
+    */
+
+    private $photoPath;
+
+    /**
    * Many Posts have One Category.
    * @ORM\ManyToOne(targetEntity="Categories", inversedBy="posts")
    * @ORM\JoinColumn(name="categoriesId", referencedColumnName="id", nullable=false)
@@ -124,6 +132,18 @@
     public function setCategories(Categories $categories){
 
       $this->categories = $categories;
+
+    }
+
+    public function setPhotoPath($photo){
+
+        $this->photoPath = $photo;
+
+    }
+
+    public function getPhotoPath(){
+
+        return $this->photoPath;
 
     }
 

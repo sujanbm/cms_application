@@ -92,7 +92,7 @@
                         foreach($posts as $post){
                                 $c['id'] = $post->getId();
                                 $c['categoryName'] = $r->getCategoryName();
-
+                                $c['photoPath'] = $post->getPhotoPath();
                                 $c['postTitle'] = $post->getPostTitle();
                                 $c['postBody'] = $post->getPostBody();
                                 $c['createdAt'] = $post->getCreatedAt();

@@ -14,12 +14,13 @@ class PostsRepository extends EntityRepository {
               $p['postTitle'] = $post->getPostTitle();
               $p['postBody'] = $post->getPostBody();
               $p['createdAt'] = $post->getCreatedAt();
+              $p['photoPath'] = $post->getPhotoPath();
               if($post->getUpdatedAt() != null){
                 $p['updatedAt'] = $post->getUpdatedAt()->format('Y-m-d H:i:s');
             }else {
                 $p['updatedAt'] = $post->getUpdatedAt();
             }
-              $p['categories'] = $post->getCategories()->getCategoryName();
+              $p['categoryName'] = $post->getCategories()->getCategoryName();
               $p['categoriesId'] = $post->getCategories()->getId();
               $pos[] = $p;
             }
@@ -47,13 +48,14 @@ class PostsRepository extends EntityRepository {
         }
     }
 
-    public function updatePost($p){
+    public function updatePost($p, $path){
 
         $post = $this->getEntityManager()->getRepository('cms\models\Posts')->find($p['id']);
 
         if($post != null){
             $post->setPostTitle($p['postTitle']);
             $post->setPostBody($p['postBody']);
+            $post->setPhotoPath($path);
             $post->setUpdatedAt();
             $post->setCategories($this->getEntityManager()->getRepository('cms\models\Categories')->find($p['categories']));
             $this->getEntityManager()->flush();

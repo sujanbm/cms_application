@@ -19,13 +19,18 @@ class PostsController extends CI_Controller {
 	}
 
 	public function addPost(){
-
+		// var_dump($_FILES);
+		// $fileName = $this->fileUpload('file');
+		// echo $fileName;
+		// die();
 		$post = new Posts();
 		$post->setPostTitle($this->input->post('postTitle'));
 		$post->setPostBody($this->input->post('postBody'));
 		$post->setCreatedAt();
 		$post->setCategories($this->doctrine->em->getRepository('cms\models\Categories')->find($this->input->post('categories')));
-
+		if ($_FILES['file']['name'] != null) {
+			$post->setPhotoPath($this->fileUpload('file'));
+		}
 		$this->doctrine->em->persist($post);
 		$this->doctrine->em->flush();
 		$this->session->set_flashdata('message', 'Post succesfully added!');
@@ -43,8 +48,10 @@ class PostsController extends CI_Controller {
 	}
 
 	public function updatePost(){
-
-		if($this->doctrine->em->getRepository('cms\models\Posts')->updatePost($this->input->post())){
+		if ($_FILES['file']['name'] != null) {
+			$path = $this->fileUpload('file');
+		}
+		if($this->doctrine->em->getRepository('cms\models\Posts')->updatePost($this->input->post(), $path)){
 			$this->session->set_flashdata('message', 'The Post has been updated!');
 			redirect(site_url('cms/posts'));
 		}else{
@@ -66,6 +73,45 @@ class PostsController extends CI_Controller {
 		}else{
 			$this->session->set_flashdata('errorMessage', 'The post does not exist!');
 			redirect(site_url('cms/posts'));
+		}
+
+	}
+
+	public function fileUpload($file){
+
+		//Config for the image
+		$config = array(
+			'upload_path' => FCPATH.'/uploads',
+			'allowed_types' => 'png|jpg|gif',
+			'overwrite' => false
+		);
+
+		$this->load->library('upload');
+		$this->upload->initialize($config);
+
+		if(!$this->upload->do_upload("file")){
+			$error = $this->upload->display_errors();
+			$this->session->set_flashdata('errorMessage', $error);
+			redirect(site_url('cms/posts/createPost'));
+		}else{
+
+			$data = $this->upload->data();
+			$file_name = $this->upload->file_name;
+			//for image manipulation
+			$this->load->library('image_lib');
+
+			$con = array(
+				'image_library' => 'gd2',
+				'source_image'	=> $data['full_path'],
+				'maintain_ratio' => true,
+				'width'	=> 1000,
+				'height' => 1000
+			);
+			$this->image_lib->clear();
+			$this->image_lib->initialize($con);
+			$this->image_lib->resize();
+
+			return $file_name;
 		}
 
 	}

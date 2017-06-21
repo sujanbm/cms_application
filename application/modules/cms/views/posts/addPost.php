@@ -30,6 +30,9 @@
                </select>
            </div>
            <div class="form-group">
+               <input type="file" name="file" id="file">
+           </div>
+           <div class="form-group">
                <button class="btn btn-success">Save</button>
            </div>
        </form>
