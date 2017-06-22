@@ -10,7 +10,7 @@
   *@ORM\Entity(repositoryClass="admin\models\Repository\AdminRepository")
   */
 
-  class Posts{
+  class Admin{
 
     /**
     * @var integer $id
@@ -33,7 +33,7 @@
     /**
     * @var string $adminEmail
     *
-    * @ORM\Column(name="adminEmail", type="string", nullable=false, length=80)
+    * @ORM\Column(name="adminEmail", type="string", nullable=false, length=255)
     */
 
     private $adminEmail;
@@ -41,7 +41,7 @@
     /**
     * @var string $adminPassword
     *
-    * @ORM\Column(name="adminPassword", type="string", nullable=false, length=80)
+    * @ORM\Column(name="adminPassword", type="string", nullable=false, length=255)
     */
 
     private $adminPassword;
@@ -49,7 +49,7 @@
     /**
     * @var string $adminPhoto
     *
-    * @ORM\Column(name="adminPhoto", type="string", length=100, nullable=true)
+    * @ORM\Column(name="adminPhoto", type="string", length=255, nullable=true)
     */
 
     private $adminPhoto;
@@ -61,6 +61,14 @@
     */
 
     private $adminStatus;
+
+    /**
+    * @var bigint $adminPhone
+    *
+    * @ORM\Column(name="adminPhone", type="bigint", nullable=false)
+    */
+
+    private $adminPhone;
 
 
     public function getId(){
@@ -126,6 +134,18 @@
     public function getAdminStatus(){
 
         return $this->adminStatus;
+
+    }
+
+    public function setAdminPhone($phone){
+
+        $this->adminPhone = $phone;
+
+    }
+
+    public function getAdminPhone(){
+
+        return $this->adminPhone;
 
     }
 
