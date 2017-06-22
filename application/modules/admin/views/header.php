@@ -41,15 +41,19 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="glyphicon glyphicon-user"></i>
-                                <span>Jane Doe <i class="caret"></i></span>
+                                <span> <?php echo $this->session->userdata('logged_in')['name']; ?> <i class="caret"></i></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img src="img/avatar3.png" class="img-circle" alt="User Image" />
+                                    <?php if ($this->session->userdata('logged_in')['photo'] != null) { ?>
+                                        <img src="<?php echo base_url();?>/uploads/admins/<?php echo $this->session->userdata('logged_in')['photo'];?>" class="img-circle" alt="User Image" />
+                                    <?php } else{ ?>
+                                        <img src="<?php echo base_url();?>/uploads/admins/facebook-avatar.jpg?>" class="img-circle" alt="User Image" />
+                                     <?php } ?>
                                     <p>
-                                        Jane Doe - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        <?php echo $this->session->userdata('logged_in')['name']; ?>
+                                        <small><?php echo $this->session->userdata('logged_in')['date']; ?></small>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -70,7 +74,7 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="<?php echo site_url('admin/signOut') ?>" class="btn btn-default btn-flat" onclick="return confirm('Are you sure want to sign out?');">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -87,10 +91,13 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="img/avatar3.png" class="img-circle" alt="User Image" />
-                        </div>
+                            <?php if ($this->session->userdata('logged_in')['photo'] != null) { ?>
+                                <img src="<?php echo base_url();?>/uploads/admins/<?php echo $this->session->userdata('logged_in')['photo'];?>" class="img-circle" alt="User Image" />
+                            <?php } else{ ?>
+                                <img src="<?php echo base_url();?>/uploads/admins/facebook-avatar.jpg?>" class="img-circle" alt="User Image" />
+                             <?php } ?>                        </div>
                         <div class="pull-left info">
-                            <p>Hello, Jane</p>
+                            <p>Hello, <?php echo $this->session->userdata('logged_in')['name'];?></p>
 
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>

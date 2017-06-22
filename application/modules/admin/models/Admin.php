@@ -70,6 +70,14 @@
 
     private $adminPhone;
 
+    /**
+    * @var datetime $createdAt
+    *
+    * @ORM\Column(name="createdAt", type = "datetime", nullable=false)
+    */
+
+    private $createdAt;
+
 
     public function getId(){
 
@@ -148,6 +156,19 @@
         return $this->adminPhone;
 
     }
+
+    public function setCreatedAt(){
+
+      $this->createdAt = new \DateTime();
+
+    }
+
+    public function getCreatedAt(){
+
+      return $this->createdAt->format('jS F Y');
+
+    }
+
 
   }
 

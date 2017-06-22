@@ -7,21 +7,16 @@ use admin\models\Admin;
 
 class AdminController extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
+	public function __construct(){
+
+		parent::__construct();
+
+		if (empty($this->session->userdata('logged_in'))){
+
+			redirect(site_url('admin/login'));
+		}
+	}
+
 	public function index()
 	{
 		$admin['admins'] = $this->doctrine->em->getRepository('admin\models\Admin')->findAll();
@@ -47,6 +42,7 @@ class AdminController extends CI_Controller {
 		$admin->setAdminName($this->input->post('adminName'));
 		$admin->setAdminEmail($this->input->post('adminEmail'));
 		$admin->setAdminPhone($this->input->post('adminPhone'));
+		$admin->setCreatedAt();
 		$password = password_hash($this->input->post('adminPassword'), PASSWORD_DEFAULT);
 		$admin->setAdminPassword($password);
 		if ($_FILES['file']['name'] != null) {
@@ -71,6 +67,14 @@ class AdminController extends CI_Controller {
 	public function deleteAdmin(){
 
 
+
+	}
+
+	public function signOut(){
+
+		$this->session->unset_userdata('logged_in');
+		$this->session->set_flashdata('errorMessage', 'Signed Out');
+		redirect('admin/login');
 
 	}
 
@@ -112,4 +116,5 @@ class AdminController extends CI_Controller {
 		}
 
 	}
+
 }
