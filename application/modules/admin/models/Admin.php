@@ -78,6 +78,22 @@
 
     private $createdAt;
 
+    /**
+    * @var datetime $updatedAt
+    *
+    * @ORM\Column(name="updatedAt", type = "datetime", nullable=true)
+    */
+
+    private $updatedAt;
+
+    // /**
+    // * @var boolean $softDelete
+    // *
+    // *   @ORM\Column(name="softDelete", type="boolean", nullable=false)
+    // */
+    //
+    // private $softDelete;
+
 
     public function getId(){
 
@@ -168,6 +184,30 @@
       return $this->createdAt->format('jS F Y');
 
     }
+
+    public function setUpdatedAt(){
+
+      $this->createdAt = new \DateTime();
+
+    }
+
+    public function getUpdatedAt(){
+
+      return $this->createdAt;
+
+    }
+
+    // public function setSoftDelete($action){
+    //
+    //     $this->softDelete = $action;
+    //
+    // }
+    //
+    // public function getSoftDelete(){
+    //
+    //     return $this->softDelete;
+    //
+    // }
 
 
   }

@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityRepository;
 use admin\models\Admin;
 
 
-class LoginController extends CI_Controller {
+class LoginController extends Front_Controller {
 
     public function __construct(){
 

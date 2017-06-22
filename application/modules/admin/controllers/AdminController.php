@@ -3,23 +3,21 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 use Doctrine\ORM\EntityRepository;
 use admin\models\Admin;
+use crm\models\Categories;
+use crm\models\Posts;
 
-
-class AdminController extends CI_Controller {
+class AdminController extends Admin_Controller {
 
 	public function __construct(){
 
 		parent::__construct();
-
-		if (empty($this->session->userdata('logged_in'))){
-
-			redirect(site_url('admin/login'));
-		}
 	}
 
 	public function index()
 	{
 		$admin['admins'] = $this->doctrine->em->getRepository('admin\models\Admin')->findAll();
+		$admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findAll();
+ 		$admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
 		$this->load->view('admins/viewAdmin', $admin);
 	}
 
@@ -60,15 +58,30 @@ class AdminController extends CI_Controller {
 
 	public function updateAdmin(){
 
+		$admin = $this->doctrine->em->getRepository('admin\models\Admin')->find($this->input->post('id'));
+		if (!empty($admin)){
 
+			$admin->setAdminName($this->input->post('adminName'));
+			$admin->setAdminEmail($this->input->post('adminEmail'));
+			$admin->setAdminPhone($this->input->post('adminPhone'));
+			$admin->setAdminStatus($this->input->post('adminStatus'));
+			if ($_FILES['file']['name'] != null) {
+				$admin->setAdminPhoto($this->fileUpload('file'));
+			}
+			$admin->setUpdatedAt();
+			$this->session->set_userdata('message', 'Updated '.$admin->getAdminName(). " Admin");
+			$this->doctrine->em->flush();
+
+			redirect(site_url('admin'));
+		}
 
 	}
 
-	public function deleteAdmin(){
-
-
-
-	}
+	// public function deleteAdmin(){
+	//
+	//
+	//
+	// }
 
 	public function signOut(){
 
