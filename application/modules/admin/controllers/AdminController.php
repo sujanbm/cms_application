@@ -20,7 +20,11 @@ class AdminController extends CI_Controller {
 	 */
 	public function index()
 	{
-		date_default_timezone_set('Asia/Kathmandu');
-		echo date('m/d/Y h:i:s a', time());
+		$this->load->view('admins/viewAdmin');
+	}
+
+	public function view(){
+
+		$this->load->view('admins/viewAdmin');
 	}
 }
