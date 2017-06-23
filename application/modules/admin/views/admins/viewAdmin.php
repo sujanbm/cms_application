@@ -1,4 +1,4 @@
-<?php require_once( APPPATH."/modules/admin/views/header.php") ?>
+<?php require_once( APPPATH."/views/admins/header.php") ?>
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -49,4 +49,4 @@
 
 </section><!-- /.content -->
 
-<?php require_once( APPPATH."/modules/admin/views/footer.php") ?>
+<?php require_once( APPPATH."/views/admins/footer.php") ?>
