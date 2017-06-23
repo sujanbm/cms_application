@@ -9,14 +9,14 @@ class PostsController extends Admin_Controller {
 
 	public function __construct(){
 
-		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null));
-		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findAll();
+		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null, ));
+		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findBy( array(), array('createdAt' => 'DESC' ));
 
 	}
 
 	public function index()
 	{
-		$this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
+		// $this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
 		$this->load->view('admins/posts/viewPost', $this->admin);
 	}
 
@@ -92,6 +92,22 @@ class PostsController extends Admin_Controller {
 		}else{
 			$this->session->set_flashdata('errorMessage', 'The post does not exist!');
 			redirect(site_url('cms/posts'));
+		}
+
+	}
+
+	public function viewPost($id){
+
+		$this->admin['post'] = $this->doctrine->em->getRepository('cms\models\Posts')->find($id);
+		if ($this->admin['post'] != null){
+
+			$this->load->view('admins/posts/view', $this->admin);
+
+		}else{
+
+			$this->session->set_flashdata('errorMessage', 'Could not view the post! The Post does not exist');
+			redirect(site_url('cms/posts'));
+
 		}
 
 	}

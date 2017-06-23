@@ -8,7 +8,7 @@ class PostsRepository extends EntityRepository {
 
     public function getAllPosts(){
 
-            $posts = $this->getEntityManager()->getRepository('cms\models\Posts')->findAll();
+            $posts = $this->getEntityManager()->getRepository('cms\models\Posts')->findBy(array(), array('createdAt'=>'DESC'));
             foreach ($posts as $post) {
               $p['id'] = $post->getId();
               $p['postTitle'] = $post->getPostTitle();

@@ -7,11 +7,11 @@
       <?php foreach ($list as $post): ?>
 
           <div class="jumbotron">
-              <h3><?php echo $post['postTitle']; ?></h3>
+              <h2><?php echo $post['postTitle']; ?></h2>
               <hr>
-              <h6><?php echo $post['categoryName'] ?></h6>
-              <small ><?php echo "Created At: ". $post['createdAt'] ?></small>
-              <hr>
+              <h4><?php echo $post['categoryName'] ?></h4>
+              <h6 class="pull-right"><?php echo "Created At: ". $post['createdAt'] ?></h6>
+              <br>
               <?php
               if($post['photoPath'] != null){
                   $path = $post['photoPath'];
@@ -23,7 +23,10 @@
               }?>
 
               <p align="justify"><?php echo $post['postBody'] ?></p>
-              <small><?php echo "Updated At: ". $post['updatedAt'] ?></small>
+              <br>
+              <?php if ($post['updatedAt']!=null): ?>
+                  <h6><?php echo "Updated At: ". $post['updatedAt'] ?></h6>
+              <?php endif; ?>
         </div>
 
       <?php endforeach; ?>
