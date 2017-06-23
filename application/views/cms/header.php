@@ -111,19 +111,3 @@
     </div>
   </nav> -->
   <div class="container">
-      <?php if ($this->session->flashdata('errorMessage')){
-          ?> <div class="alert alert-warning">
-              <strong><?php echo $this->session->flashdata('errorMessage');?></strong>
-          </div><?php
-      }
-      if ($this->session->flashdata('deleteMessage')) {
-          ?> <div class="alert alert-danger">
-              <strong><?php echo $this->session->flashdata('deleteMessage');?></strong>
-          </div><?php
-      }
-      if ($this->session->flashdata('message')) {
-          ?><div class="alert alert-success">
-              <strong><?php echo $this->session->flashdata('message');?></strong>
-            </div><?php
-      }
-          ?>

@@ -8,29 +8,40 @@ use crm\models\Posts;
 
 class AdminController extends Admin_Controller {
 
+	protected $admin;
+
 	public function __construct(){
 
 		parent::__construct();
+		$this->admin['admins'] = $this->doctrine->em->getRepository('admin\models\Admin')->findAll();
+		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findAll();
+		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
+
 	}
 
 	public function index()
 	{
-		$admin['admins'] = $this->doctrine->em->getRepository('admin\models\Admin')->findAll();
-		$admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findAll();
- 		$admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
-		$this->load->view('admins/viewAdmin', $admin);
+		// $admin['admins'] = $this->doctrine->em->getRepository('admin\models\Admin')->findAll();
+		// $admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findAll();
+ 	// 	$admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
+		$this->load->view('admins/viewAdmin', $this->admin);
 	}
 
 	public function createAdmin(){
 
-		$this->load->view('admins/createAdmin');
+		$this->load->view('admins/createAdmin', $this->admin);
 
 	}
 
 	public function editAdmin($id){
 
-		$admin['admin'] = $this->doctrine->em->getRepository('admin\models\Admin')->find($id);
-		$this->load->view('admins/editAdmin', $admin);
+		$this->admin['admin'] = $this->doctrine->em->getRepository('admin\models\Admin')->find($id);
+		if (!empty($this->admin['admin'])){
+			$this->load->view('admins/editAdmin', $this->admin);
+		}else{
+			$this->session->set_flashdata('errorMessage', 'Admin with that id does not exist');
+			redirect(site_url('admin'));
+		}
 
 	}
 
@@ -50,7 +61,7 @@ class AdminController extends Admin_Controller {
 
 		$this->doctrine->em->persist($admin);
 		$this->doctrine->em->flush();
-
+		$this->session->set_flashdata('message', 'Admin '.$this->input->post('adminName'). ' has been added');
 		redirect(site_url('admin/'));
 
 
@@ -69,9 +80,12 @@ class AdminController extends Admin_Controller {
 				$admin->setAdminPhoto($this->fileUpload('file'));
 			}
 			$admin->setUpdatedAt();
-			$this->session->set_userdata('message', 'Updated '.$admin->getAdminName(). " Admin");
+			$this->session->set_flashdata('message', 'Updated '. $this->input->post('adminName'). " Admin");
 			$this->doctrine->em->flush();
 
+			redirect(site_url('admin'));
+		}else{
+			$this->session->set_flashdata('errorMessage', 'Some error occured, could not update');
 			redirect(site_url('admin'));
 		}
 

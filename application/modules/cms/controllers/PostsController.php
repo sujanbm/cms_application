@@ -5,16 +5,23 @@ use cms\models\Categories;
 use cms\models\Posts;
 class PostsController extends Admin_Controller {
 
+	protected $admin;
+
+	public function __construct(){
+
+		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null));
+		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findAll();
+
+	}
+
 	public function index()
 	{
-		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null));
-		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
-		$this->load->view('posts/viewPost', $posts);
+		$this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
+		$this->load->view('admins/posts/viewPost', $this->admin);
 	}
 
 	public function createPost(){
-		$category['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null));
-		$this->load->view('posts/addPost', $category);
+		$this->load->view('admins/posts/addPost', $this->admin);
 
 	}
 
@@ -41,22 +48,34 @@ class PostsController extends Admin_Controller {
 
 	public function editPost($id){
 
-		$post['post'] = $this->doctrine->em->getRepository('cms\models\Posts')->find($id);
-		$post['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null));
-		$this->load->view('posts/editPost', $post);
+		$this->admin['post'] = $this->doctrine->em->getRepository('cms\models\Posts')->findOneBy(array( 'id'=> $id));
+		// $test['name'] = $this->admin['post']->getPostTitle();
+		// $test['body'] = $this->admin['post']->getPostBody();
+		// var_dump($test);
+		// die();
+		$this->load->view('admins/posts/editPost', $this->admin);
 
 	}
 
 	public function updatePost(){
-		if ($_FILES['file']['name'] != null) {
-			$path = $this->fileUpload('file');
-		}
-		if($this->doctrine->em->getRepository('cms\models\Posts')->updatePost($this->input->post(), $path)){
-			$this->session->set_flashdata('message', 'The Post has been updated!');
+
+		$post = $this->doctrine->em->getRepository('cms\models\Posts')->find($this->input->post('id'));
+
+		if($post != null){
+			$post->setPostTitle($this->input->post('postTitle'));
+			$post->setPostBody($this->input->post('postBody'));
+			if ($_FILES['file']['name'] != null) {
+				$path = $this->fileUpload('file');
+				$post->setPhotoPath($path);
+			}
+			$post->setUpdatedAt();
+			$post->setCategories($this->doctrine->em->getRepository('cms\models\Categories')->find($this->input->post('categories')));
+			$this->doctrine->em->flush();
+			$this->session->set_flashdata('message', 'The Post ' .$post->getPostTitle(). ' has been updated!');
 			redirect(site_url('cms/posts'));
 		}else{
-			$this->session->set_flashdata('errorMessage', 'Error Occured!');
-			redirect(site_url('cms/posts/editPost'). $this->input->post('id'));
+			$this->session->set_flashdata('errorMessage', 'Error Occured! Could not update!!');
+			redirect(site_url('cms/posts/'));
 		}
 
 

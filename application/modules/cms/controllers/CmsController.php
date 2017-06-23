@@ -24,13 +24,13 @@ class CmsController extends Front_Controller {
 	{
 		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null));
 		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
-		$this->load->view('posts/viewPost', $posts);
+		$this->load->view('front/viewPost', $posts);
 	}
 
 	public function category($id){
 		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
 		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getPosts($id);
-		$this->load->view('posts/viewPost', $posts);
+		$this->load->view('front/viewPost', $posts);
 
 	}
 }

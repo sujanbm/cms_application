@@ -5,30 +5,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class CategoriesController extends Admin_Controller {
 
+	protected $admin;
+
+	public function __construct(){
+
+		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null));
+		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findAll();
+
+	}
 	public function index(){
 
-		$categories['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
-		$categories['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
-		$this->load->view('categories/viewCategories', $categories);
+		$this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
+		$this->load->view('admins/categories/viewCategories', $this->admin);
 
 	}
 
 	public function createCategory(){
-		$category['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
 
-
-		// foreach($category['categories'] as $c){
-		// 	$tab = "";
-		// 	$ca['categoryName'] = $c->getCategoryName();
-		// 	$ca['id'] = $c->getId();
-		// 	$ca['sub'] = $this->checkChild($c, $tab);
-		// 	$cate[] = $ca;
-		// }
-		// $category['list'] = $cate;
-		// //
-		// // var_dump($cat);
-		// // die();
-		$this->load->view('categories/addCategories', $category);
+		$this->load->view('admins/categories/addCategories', $this->admin);
 
 	}
 
@@ -46,9 +40,8 @@ class CategoriesController extends Admin_Controller {
 
 	public function editCategory($id){
 
-		$category['cat'] = $this->doctrine->em->getRepository('cms\models\Categories')->find($id);
-		$category['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
-		$this->load->view('categories/editCategory', $category);
+		$this->admin['cat'] = $this->doctrine->em->getRepository('cms\models\Categories')->find($id);
+		$this->load->view('admins/categories/editCategory', $this->admin);
 
 	}
 
@@ -64,9 +57,8 @@ class CategoriesController extends Admin_Controller {
 	}
 
 	public function posts($id){
-		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
-		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getPosts($id);
-		$this->load->view('posts/viewPost', $posts);
+		$this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getPosts($id);
+		$this->load->view('front/viewPost', $this->admin);
 
 	}
 
@@ -94,15 +86,8 @@ class CategoriesController extends Admin_Controller {
 
 		$cat = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => $id ));
 		if ($cat != null){
-			// foreach ($categ as $category) {
-			//   $cat['id'] = $category->getId();
-			//   $cat['categoryName'] = $category->getCategoryName();
-			//   $cate[] = $cat;
-			// }
-			$c['list'] = $cat;
-			$c['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
-
-			$this->load->view('categories/viewCategories', $c);
+			$this->admin['list'] = $cat;
+			$this->load->view('admins/categories/viewCategories', $this->admin);
 
 		}else{
 			$this->session->set_flashdata('errorMessage', 'No Sub Categories exist!');
@@ -111,6 +96,21 @@ class CategoriesController extends Admin_Controller {
 	}
 
 	public function checkChild($category, $tab){
+
+
+		//from createCategory()
+				// foreach($category['categories'] as $c){
+				// 	$tab = "";
+				// 	$ca['categoryName'] = $c->getCategoryName();
+				// 	$ca['id'] = $c->getId();
+				// 	$ca['sub'] = $this->checkChild($c, $tab);
+				// 	$cate[] = $ca;
+				// }
+				// $category['list'] = $cate;
+				// //
+				// // var_dump($cat);
+				// // die();
+
 			if($category->getCategory()->count() > 0){
 				$tab = $tab . " - - ";
 				foreach ($category->getCategory() as $cat) {

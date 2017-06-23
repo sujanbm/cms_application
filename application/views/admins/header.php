@@ -143,8 +143,8 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <?php foreach ($categories as $category): ?>
-                                    <li><a href=""><i class="fa fa-angle-double-right"></i> <?php echo $category->getCategoryName(); ?> </a></li>
+                                <?php foreach ($categories as $c): ?>
+                                    <li><a href=""><i class="fa fa-angle-double-right"></i> <?php echo $c->getCategoryName(); ?> </a></li>
                                 <?php endforeach; ?>
                             </ul>
                         </li>
@@ -166,8 +166,8 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <?php foreach ($posts as $post): ?>
-                                    <li><a href=""><i class="fa fa-angle-double-right"></i> <?php echo $post->getPostTitle(); ?> </a></li>
+                                <?php foreach ($posts as $p): ?>
+                                    <li><a href=""><i class="fa fa-angle-double-right"></i> <?php echo $p->getPostTitle(); ?> </a></li>
                                 <?php endforeach; ?>
                             </ul>
                         </li>
@@ -178,3 +178,19 @@
 
             <!-- Right side column. Contains the navbar and content of the page -->
             <aside class="right-side">
+                <?php if ($this->session->flashdata('errorMessage')){
+                    ?> <div class="alert alert-warning">
+                        <strong><?php echo $this->session->flashdata('errorMessage');?></strong>
+                    </div><?php
+                }
+                if ($this->session->flashdata('deleteMessage')) {
+                    ?> <div class="alert alert-danger">
+                        <strong><?php echo $this->session->flashdata('deleteMessage');?></strong>
+                    </div><?php
+                }
+                if ($this->session->flashdata('message')) {
+                    ?><div class="alert alert-success">
+                        <strong><?php echo $this->session->flashdata('message');?></strong>
+                      </div><?php
+                }
+                    ?>
