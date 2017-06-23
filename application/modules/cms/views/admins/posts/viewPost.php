@@ -21,7 +21,7 @@
                  <th>Actions</th>
 
              </tr>
-             <?php foreach ($posts as $post): ?>
+             <?php foreach ($pos as $post): ?>
                  <tr>
                      <td><?php echo $post->getPostTitle(); ?></td>
                      <td><?php echo $post->getCategories()->getCategoryName(); ?></td>
@@ -43,6 +43,7 @@
              <?php endforeach; ?>
          </table>
 
+         <ul class="clear pagination"><?php echo $links; ?></ul>
 
 
 </div>

@@ -61,9 +61,20 @@ class PostsRepository extends EntityRepository {
             $this->getEntityManager()->flush();
             return true;
         }
-
-
     }
+
+        public function fetch_users($limit, $start){
+        $post = $this->getEntityManager()->getRepository('cms\models\Posts')->findBy(array(), array('id'=>'DESC'), $limit, $start);
+        if($post != null){
+            return $post;
+        }
+        else{
+            return false;
+
+        }
+}
+
+
 
 
 }

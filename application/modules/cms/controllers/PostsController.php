@@ -11,12 +11,42 @@ class PostsController extends Admin_Controller {
 
 		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null, ));
 		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findBy( array(), array('createdAt' => 'DESC' ));
+		$this->load->library('pagination');
 
 	}
 
 	public function index()
 	{
 		// $this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
+		$config = array(
+			'base_url'		=>	site_url('cms/posts/index'),
+			'total_rows'	=>	count($this->doctrine->em->getRepository('cms\models\Posts')->findAll()),
+			'per_page'		=>	2,
+			'uri-segment'	=>	4,
+			
+			'first_link'	=> 'First',
+			'last_link'		=>	'Last',
+
+			'first_tag_open'=> '<li>',
+			'last_tag_open'	=>	'<li>',
+			'next_tag_open'	=>	'<li>',
+			'prev_tag_open'	=>	'<li>',
+			'num_tag_open'	=>	'<li>',
+			'cur_tag_open'	=> '<li>',
+
+			'first_tag_close'	=> '</li>',
+			'last_tag_close'	=>	'</li>',
+			'next_tag_close'	=>	'</li>',
+			'prev_tag_close'	=>	'</li>',
+			'num_tag_close'	=> '</li>',
+			'cur_tag_close'	=> "</li>",
+		);
+
+		$this->pagination->initialize($config);
+		$page = ($this->uri->segment(4)) ? ($this->uri->segment(4)) : 0;
+		$this->admin['pos'] = $this->doctrine->em->getRepository('cms\models\Posts')->fetch_users($config['per_page'], $page);
+		$this->admin['links'] = $this->pagination->create_links();
+
 		$this->load->view('admins/posts/viewPost', $this->admin);
 	}
 
