@@ -3,7 +3,7 @@ use Doctrine\ORM\EntityRepository;
 use cms\models\Categories;
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class CategoriesController extends CI_Controller {
+class CategoriesController extends Admin_Controller {
 
 	public function index(){
 

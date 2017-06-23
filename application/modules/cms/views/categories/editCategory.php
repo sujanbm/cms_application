@@ -1,7 +1,16 @@
-<?php require_once(APPPATH. 'modules/cms/views/header.php'); ?>
-    <h1>Edit Category</h1>
-    <br>
-    <div class="row">
+<?php require_once(APPPATH. '/views/admins/header.php'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Edit Categories
+    </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="">
+
 
            <form action="<?php echo site_url('cms/Categories/updateCategory')?>" class="form" role="form" method="post" enctype="multipart/form-data" id = "FormId">
                <div class="form-group">
@@ -25,6 +34,9 @@
                </div>
                 <input type="hidden" name="id" value="<?php echo $cat->getId(); ?>">
            </form>
-     </div>
 
-<?php require_once(APPPATH. 'modules/cms/views/footer.php'); ?>
+
+       </div>
+       </section><!-- /.content -->
+
+    <?php require_once(APPPATH. '/views/admins/footer.php'); ?>

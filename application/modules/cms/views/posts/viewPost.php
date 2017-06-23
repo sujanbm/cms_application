@@ -1,4 +1,4 @@
-<?php require_once(APPPATH."modules/cms/views/header.php"); ?>
+<?php require_once(APPPATH."views/cms/header.php"); ?>
 <h3>Posts</h3>
 <hr>
 <br>
@@ -60,4 +60,4 @@
    </table> -->
   </div>
 
-<?php require_once(APPPATH."modules/cms/views/footer.php") ?>
+<?php require_once(APPPATH."views/cms/footer.php") ?>

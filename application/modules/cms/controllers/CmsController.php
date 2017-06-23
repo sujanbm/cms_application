@@ -1,7 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
-class CmsController extends CI_Controller {
+use Doctrine\ORM\EntityRepository;
+use cms\models\Categories;
+use cms\models\Posts;
+class CmsController extends Front_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -20,6 +22,15 @@ class CmsController extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('view');
+		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null));
+		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
+		$this->load->view('posts/viewPost', $posts);
+	}
+
+	public function category($id){
+		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
+		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getPosts($id);
+		$this->load->view('posts/viewPost', $posts);
+
 	}
 }

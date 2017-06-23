@@ -1,7 +1,16 @@
-<?php require_once(APPPATH. 'modules/cms/views/header.php'); ?>
-<h1>Create Category</h1>
-<br>
-<div class="row">
+<?php require_once(APPPATH. '/views/admins/header.php'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Add Categories
+    </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="">
+
 
        <form action="<?php echo site_url('cms/Categories/addCategory');?>" class="form" role="form" method="post" enctype="multipart/form-data" id = "FormId">
            <div class="form-group">
@@ -14,13 +23,6 @@
                    <option value="">Null</option>
                    <?php if( !empty($categories)) foreach ($categories as $category) { ?>
                         <option value="<?php echo $category->getId(); ?>"> <?php echo $category->getCategoryName(); ?> </option>
-                            <!-- <?php if ($category->getCategory()->count() >0): ?>
-
-                                <?php foreach ($category->getCategory() as $cat): ?>
-                                    <option value="<?php echo $cat->getId(); ?>"> <?php echo " - - " . $cat->getCategoryName(); ?> </option>
-                                <?php endforeach; ?>
-
-                            <?php endif; ?> -->
                     <?php } ?>
 
                </select>
@@ -30,15 +32,6 @@
            </div>
        </form>
    </div>
+   </section><!-- /.content -->
 
-<?php require_once(APPPATH. 'modules/cms/views/footer.php'); ?>
-
-<!--
-                    <?php
-                        foreach($list as $category){ ?>
-                            <option value="<?php echo $category['id']; ?>"><?php echo $category['categoryName']; ?></option>
-                                <?php if($category['sub'] !=  null) foreach($category['sub'] as $subs){ ?>
-                                    <option value="<?php echo $subs['id']; ?>"><?php echo $subs['categoryName'] ;?></option>
-                                <?php }?>
-                        <?php }
-                    ?> -->
+<?php require_once(APPPATH. '/views/admins/footer.php'); ?>
