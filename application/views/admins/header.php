@@ -132,8 +132,8 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href=""><i class="fa fa-angle-double-right"></i>Create Categories</a></li>
-                                <li><a href=""><i class="fa fa-angle-double-right"></i> View All Categories</a></li>
+                                <li><a href="<?php echo site_url('cms/categories/createCategory'); ?>"><i class="fa fa-angle-double-right"></i>Create Categories</a></li>
+                                <li><a href="<?php echo site_url('cms/categories'); ?>"><i class="fa fa-angle-double-right"></i> View All Categories</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
@@ -144,7 +144,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <?php foreach ($categories as $c): ?>
-                                    <li><a href=""><i class="fa fa-angle-double-right"></i> <?php echo $c->getCategoryName(); ?> </a></li>
+                                    <li><a href="<?php echo site_url('cms/categories/posts/').$c->getId(); ?>"><i class="fa fa-angle-double-right"></i> <?php echo $c->getCategoryName(); ?> </a></li>
                                 <?php endforeach; ?>
                             </ul>
                         </li>
@@ -155,8 +155,8 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href=""><i class="fa fa-angle-double-right"></i>Create Post</a></li>
-                                <li><a href=""><i class="fa fa-angle-double-right"></i> View All Post</a></li>
+                                <li><a href="<?php echo site_url('cms/posts/createPost') ?>"><i class="fa fa-angle-double-right"></i>Create Post</a></li>
+                                <li><a href="<?php echo site_url('cms/posts') ?>"><i class="fa fa-angle-double-right"></i> View All Post</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
@@ -167,7 +167,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <?php foreach ($posts as $p): ?>
-                                    <li><a href=""><i class="fa fa-angle-double-right"></i> <?php echo $p->getPostTitle(); ?> </a></li>
+                                    <li><a href="<?php echo site_url('cms/posts/viewPost/').$p->getId() ?>"><i class="fa fa-angle-double-right"></i> <?php echo $p->getPostTitle(); ?> </a></li>
                                 <?php endforeach; ?>
                             </ul>
                         </li>

@@ -21,7 +21,7 @@
                  <th>Actions</th>
 
              </tr>
-             <?php foreach ($pos as $post): ?>
+             <?php foreach ($list as $post): ?>
                  <tr>
                      <td><?php echo $post->getPostTitle(); ?></td>
                      <td><?php echo $post->getCategories()->getCategoryName(); ?></td>

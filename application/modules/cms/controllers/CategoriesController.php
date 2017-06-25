@@ -58,7 +58,7 @@ class CategoriesController extends Admin_Controller {
 
 	public function posts($id){
 		$this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getPosts($id);
-		$this->load->view('front/viewPost', $this->admin);
+		$this->load->view('admins/categories/viewPosts', $this->admin);
 
 	}
 
