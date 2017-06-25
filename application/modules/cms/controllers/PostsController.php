@@ -18,43 +18,17 @@ class PostsController extends Admin_Controller {
 	public function index()
 	{
 		// $this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
-		$config = array(
-			'base_url'			=>	site_url('cms/posts/index'),
-			'total_rows'		=>	count($this->doctrine->em->getRepository('cms\models\Posts')->findAll()),
-			'per_page'			=>	3,
-			'uri-segment'		=>	4,
+		$config['base_url']		=	site_url('cms/posts/index');
+		$config['per_page']		=	3;
+		$config['uri-segment']	=	4;
+		$config['total_rows']	=	count($this->doctrine->em->getRepository('cms\models\Posts')->findAll());
 
-			// 'use_page_numbers'	=>	TRUE,
-			// 'display_pages'		=>	FALSE,
-
-			'first_link'		=>	'First',
-			'last_link'			=>	'Last',
-			// 'next_link'			=>	'Next Page &rarr;',
-			// 'prev_link'			=>	'&larr; Previous Page',
-
-			'full_tag_open'		=>	'<div><ul class="pagination pull-right">',
-			'full_tag_close'	=>	'</ul></div>',
-
-			'first_tag_open'	=>	'<li class="prev page">',
-			'last_tag_open'		=>	'<li class="next page">',
-			'next_tag_open'		=>	'<li class="next page">',
-			'prev_tag_open'		=>	'<li class="prev page">',
-			'num_tag_open'		=>	'<li class="page">',
-
-			'first_tag_close'	=>	'</li>',
-			'last_tag_close'	=>	'</li>',
-			'next_tag_close'	=>	'</li>',
-			'prev_tag_close'	=>	'</li>',
-			'num_tag_close'		=>	'</li>',
-
-			'cur_tag_open'		=>	'<li class="active"><a href="">',
-			'cur_tag_close'		=>	'</a></li>',
-		);
-
+		// $this->load->config('pagination');
 		$this->pagination->initialize($config);
+
+		$this->admin['links'] = $this->pagination->create_links();
 		$page = ($this->uri->segment(4)) ? ($this->uri->segment(4)) : 0;
 		$this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->fetch_users($config['per_page'], $page);
-		$this->admin['links'] = $this->pagination->create_links();
 
 		$this->load->view('admins/posts/viewPost', $this->admin);
 	}

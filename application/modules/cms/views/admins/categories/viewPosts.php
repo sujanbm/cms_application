@@ -21,23 +21,31 @@
                  <th>Actions</th>
 
              </tr>
+
              <?php foreach ($list as $post): ?>
+
                  <tr>
-                     <td><?php echo $post['postTitle']; ?></td>
-                     <td><?php echo $post['categoryName']; ?></td>
-                     <td><?php echo $post['createdAt'];?></td>
-                     <td><?php echo $post['updatedAt']; ?></td>
+                     <td><?php echo $post->getPostTitle(); ?></td>
+                     <td><?php echo $post->getCategories()->getCategoryName(); ?></td>
+                     <td><?php echo $post->getCreatedAt();?></td>
                      <td>
-                          <a href="<?php echo site_url('cms/posts/editPost/') . $post['id']?>"><button type="button" class="btn btn-primary">Edit</button></a>
-                          <a href="<?php echo site_url('cms/posts/viewPost/') . $post['id'] ?>"><button type="button" class="btn btn-success">View</button></a>
-                          <a href="<?php echo site_url('cms/posts/deletePost/') . $post['id'] ?>"><button type="button" class="btn btn-danger" onclick="return confirm('Are you sure want to delete');">Delete</button></a>
+                        <?php if($post->getUpdatedAt() != null){
+                           echo $post->getUpdatedAt()->format('Y-m-d H:i:s');
+                       }else {
+                           echo $post->getUpdatedAt();
+                       } ?>
+                     </td>
+                     <td>
+                          <a href="<?php echo site_url('cms/posts/editPost/') . $post->getId() ?>"><button type="button" class="btn btn-primary">Edit</button></a>
+                          <a href="<?php echo site_url('cms/posts/viewPost/') . $post->getId() ?>"><button type="button" class="btn btn-success">View</button></a>
+                          <a href="<?php echo site_url('cms/posts/deletePost/') . $post->getId() ?>"><button type="button" class="btn btn-danger" onclick="return confirm('Are you sure want to delete');">Delete</button></a>
                      </td>
 
                  </tr>
              <?php endforeach; ?>
          </table>
 
-         <!-- <ul class="clear pagination"><?php echo $links; ?></ul> -->
+         <?php echo $links; ?>
 
 
 </div>

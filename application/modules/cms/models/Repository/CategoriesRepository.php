@@ -107,10 +107,43 @@
                 }
                 if (!empty($p)){
                     return $p;
+                }else{
+                    return $posts;
                 }
-                return $posts;
             }else{
                 redirect(site_url('cms/categories'));
+            }
+        }
+
+        public function getPostsFromCategory($id, $per_page = null, $page = null){
+            // $query = $this->getEntityManager()->createQuery("SELECT c FROM cms\models\Categories c WHERE (c.id = :id OR c.subCategory = :id)");
+            $query = $this->getEntityManager()->createQuery("
+                SELECT p FROM cms\models\Posts p
+                JOIN cms\models\Categories c WHERE (c.id = p.categories)
+                LEFT JOIN cms\models\Categories cp WHERE (cp.id = c.subCategory)
+                WHERE (c.id = :id or cp.id = :id)
+            ");
+            $query->setParameters(array(
+                'id' => $id,
+            ));
+            $query->setMaxResults($per_page);
+            $query->setFirstResult($page);
+
+            $result = $query->getResult();
+
+            if ($result != null){
+                // foreach($result as $r){
+                //     $posts = $r->getPosts();
+                //     if ($posts->count() > 0){
+                //         foreach($posts as $post){
+                //             $p[] = $post;
+                //         }
+                //     }
+                // }
+                // return $p;
+                return $result;
+            }else{
+                redirect(site_url('cms/categories/'));
             }
         }
 
