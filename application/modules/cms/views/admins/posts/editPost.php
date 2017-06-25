@@ -41,10 +41,10 @@
                <?php
                     if($post->getPhotoPath() != null){
                                 $path = $post->getPhotoPath();
-                                if(file_exists(FCPATH."uploads/".$path)){?>
-                                <img src="<?php echo base_url();?>/uploads/<?php echo $path?>" class="img-responsive img-rounded" width = "180" height="auto" alt="">
+                                if(file_exists(FCPATH."uploads/posts/".$path)){?>
+                                <img src="<?php echo base_url();?>/uploads/posts/<?php echo $path?>" class="img-responsive img-rounded" width = "180" height="auto" alt="">
                                 <?php }else{?>
-                                  <img src="<?php echo base_url();?>/uploads/?>/facebook-avatar.jpg" class="img-responsive img-rounded" width="180" height="auto" alt="">
+                                  <img src="<?php echo base_url();?>/uploads/facebook-avatar.jpg" class="img-responsive img-rounded" width="180" height="auto" alt="">
                                <?php }
                            }?>
                <input type="file" name="file" id="file">

@@ -17,8 +17,8 @@
             <?php
             if($post->getPhotoPath() != null){
                 $path = $post->getPhotoPath();
-                if(file_exists(FCPATH."uploads/".$path)){?>
-                <img src="<?php echo base_url();?>/uploads/<?php echo $path?>" class="img-responsive img-rounded" width="800" height="auto" alt="">
+                if(file_exists(FCPATH."uploads/posts/".$path)){?>
+                <img src="<?php echo base_url();?>/uploads/posts/<?php echo $path?>" class="img-responsive img-rounded" width="800" height="auto" alt="">
                 <?php }else{?>
                   <img src="<?php echo base_url(); ?>/uploads/facebook-avatar.jpg" class="img-responsive img-rounded" width="800" height="auto" alt="">
                <?php }

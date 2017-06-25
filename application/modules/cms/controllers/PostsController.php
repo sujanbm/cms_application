@@ -98,8 +98,16 @@ class PostsController extends Admin_Controller {
 			$post->setPostTitle($this->input->post('postTitle'));
 			$post->setPostBody($this->input->post('postBody'));
 			if ($_FILES['file']['name'] != null) {
+
+				//Removes the old photo
+				$path = FCPATH.'/uploads/posts/'.$post->getPhotoPath();
+				if(file_exists($path)) {
+					unlink($path);
+				}
+
 				$path = $this->fileUpload('file');
 				$post->setPhotoPath($path);
+
 			}
 			$post->setUpdatedAt();
 			$post->setCategories($this->doctrine->em->getRepository('cms\models\Categories')->find($this->input->post('categories')));
@@ -119,6 +127,11 @@ class PostsController extends Admin_Controller {
 		$post = $this->doctrine->em->getRepository('cms\models\Posts')->find($id);
 		if ($post != null){
 			$this->session->set_flashdata('deleteMessage', 'The Post ' .$post->getPostTitle(). ' has been deleted!');
+			//Removes the photo
+			$path = FCPATH.'/uploads/posts/'.$post->getPhotoPath();
+			if(file_exists($path)) {
+				unlink($path);
+			}
 			$this->doctrine->em->remove($post);
 			$this->doctrine->em->flush();
 			redirect(site_url('cms/posts'));
@@ -149,9 +162,11 @@ class PostsController extends Admin_Controller {
 
 		//Config for the image
 		$config = array(
-			'upload_path' => FCPATH.'/uploads',
+			'upload_path' => FCPATH.'/uploads/posts/',
 			'allowed_types' => 'png|jpg|gif',
-			'overwrite' => false
+			'overwrite' => false,
+			'encrypt_name' => TRUE,
+			'max_filename' => 15
 		);
 
 		$this->load->library('upload');

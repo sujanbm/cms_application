@@ -15,10 +15,10 @@
               <?php
               if($post['photoPath'] != null){
                   $path = $post['photoPath'];
-                  if(file_exists(FCPATH."uploads/".$path)){?>
-                  <img src="<?php echo base_url();?>/uploads/<?php echo $post['photoPath']?>" class="img-responsive img-rounded" width="100%" height="auto" alt="">
+                  if(file_exists(FCPATH."uploads/posts/".$path)){?>
+                  <img src="<?php echo base_url();?>/uploads/posts/<?php echo $post['photoPath']?>" class="img-responsive img-rounded" width="100%" height="auto" alt="">
                   <?php }else{?>
-                    <img src="http://gazettereview.com/wp-content/uploads/2016/03/facebook-avatar.jpg" alt="">
+                    <img src="<?php echo base_url(); ?>/uploads/facebook-avatar.jpg" alt="">
                  <?php }
               }?>
 
