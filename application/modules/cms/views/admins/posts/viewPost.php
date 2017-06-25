@@ -42,8 +42,7 @@
                  </tr>
              <?php endforeach; ?>
          </table>
-
-         <ul class="clear pagination"><?php echo $links; ?></ul>
+         <?php echo $links ?>
 
 
 </div>

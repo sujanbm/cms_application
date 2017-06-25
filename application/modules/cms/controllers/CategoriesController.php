@@ -95,33 +95,33 @@ class CategoriesController extends Admin_Controller {
 		}
 	}
 
-	public function checkChild($category, $tab){
-
-
-		//from createCategory()
-				// foreach($category['categories'] as $c){
-				// 	$tab = "";
-				// 	$ca['categoryName'] = $c->getCategoryName();
-				// 	$ca['id'] = $c->getId();
-				// 	$ca['sub'] = $this->checkChild($c, $tab);
-				// 	$cate[] = $ca;
-				// }
-				// $category['list'] = $cate;
-				// //
-				// // var_dump($cat);
-				// // die();
-
-			if($category->getCategory()->count() > 0){
-				$tab = $tab . " - - ";
-				foreach ($category->getCategory() as $cat) {
-
-					$sub['categoryName'] = $tab . $cat->getCategoryName();
-					$sub['id'] =  $cat->getId();
-					$sub['sub'] = $this->checkChild($cat, $tab);
-					$catego[] = $sub;
-				}
-					return $catego;
-			}
-	}
+	// public function checkChild($category, $tab){
+	//
+	//
+	// 	//from createCategory()
+	// 			// foreach($category['categories'] as $c){
+	// 			// 	$tab = "";
+	// 			// 	$ca['categoryName'] = $c->getCategoryName();
+	// 			// 	$ca['id'] = $c->getId();
+	// 			// 	$ca['sub'] = $this->checkChild($c, $tab);
+	// 			// 	$cate[] = $ca;
+	// 			// }
+	// 			// $category['list'] = $cate;
+	// 			// //
+	// 			// // var_dump($cat);
+	// 			// // die();
+	//
+	// 		if($category->getCategory()->count() > 0){
+	// 			$tab = $tab . " - - ";
+	// 			foreach ($category->getCategory() as $cat) {
+	//
+	// 				$sub['categoryName'] = $tab . $cat->getCategoryName();
+	// 				$sub['id'] =  $cat->getId();
+	// 				$sub['sub'] = $this->checkChild($cat, $tab);
+	// 				$catego[] = $sub;
+	// 			}
+	// 				return $catego;
+	// 		}
+	// }
 
 }

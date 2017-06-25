@@ -19,28 +19,36 @@ class PostsController extends Admin_Controller {
 	{
 		// $this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
 		$config = array(
-			'base_url'		=>	site_url('cms/posts/index'),
-			'total_rows'	=>	count($this->doctrine->em->getRepository('cms\models\Posts')->findAll()),
-			'per_page'		=>	2,
-			'uri-segment'	=>	4,
+			'base_url'			=>	site_url('cms/posts/index'),
+			'total_rows'		=>	count($this->doctrine->em->getRepository('cms\models\Posts')->findAll()),
+			'per_page'			=>	3,
+			'uri-segment'		=>	4,
 
-			'first_link'	=> 'First',
-			'last_link'		=>	'Last',
+			// 'use_page_numbers'	=>	TRUE,
+			// 'display_pages'		=>	FALSE,
 
-			'first_tag_open'=> '<li>',
-			'last_tag_open'	=>	'<li>',
-			'next_tag_open'	=>	'<li>',
-			'prev_tag_open'	=>	'<li>',
-			'num_tag_open'	=>	'<li>',
+			'first_link'		=>	'First',
+			'last_link'			=>	'Last',
+			// 'next_link'			=>	'Next Page &rarr;',
+			// 'prev_link'			=>	'&larr; Previous Page',
 
-			'first_tag_close'	=> '</li>',
+			'full_tag_open'		=>	'<div><ul class="pagination pull-right">',
+			'full_tag_close'	=>	'</ul></div>',
+
+			'first_tag_open'	=>	'<li class="prev page">',
+			'last_tag_open'		=>	'<li class="next page">',
+			'next_tag_open'		=>	'<li class="next page">',
+			'prev_tag_open'		=>	'<li class="prev page">',
+			'num_tag_open'		=>	'<li class="page">',
+
+			'first_tag_close'	=>	'</li>',
 			'last_tag_close'	=>	'</li>',
 			'next_tag_close'	=>	'</li>',
 			'prev_tag_close'	=>	'</li>',
-			'num_tag_close'	=> '</li>',
+			'num_tag_close'		=>	'</li>',
 
-			'cur_tag_open'	=> '<li class="active"><a href="">',
-			'cur_tag_close'	=> "</a></li>",
+			'cur_tag_open'		=>	'<li class="active"><a href="">',
+			'cur_tag_close'		=>	'</a></li>',
 		);
 
 		$this->pagination->initialize($config);
@@ -52,15 +60,13 @@ class PostsController extends Admin_Controller {
 	}
 
 	public function createPost(){
+
 		$this->load->view('admins/posts/addPost', $this->admin);
 
 	}
 
 	public function addPost(){
-		// var_dump($_FILES);
-		// $fileName = $this->fileUpload('file');
-		// echo $fileName;
-		// die();
+
 		$post = new Posts();
 		$post->setPostTitle($this->input->post('postTitle'));
 		$post->setPostBody($this->input->post('postBody'));
@@ -80,10 +86,6 @@ class PostsController extends Admin_Controller {
 	public function editPost($id){
 
 		$this->admin['post'] = $this->doctrine->em->getRepository('cms\models\Posts')->findOneBy(array( 'id'=> $id));
-		// $test['name'] = $this->admin['post']->getPostTitle();
-		// $test['body'] = $this->admin['post']->getPostBody();
-		// var_dump($test);
-		// die();
 		$this->load->view('admins/posts/editPost', $this->admin);
 
 	}
