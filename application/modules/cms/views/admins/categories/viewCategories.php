@@ -21,7 +21,7 @@
            <tr>
                <td><?php echo $category->getCategoryName(); ?></td>
                <td>
-                    <a href="<?php echo site_url('cms/categories/posts/') . $category->getId() ?>"><button type="button" class="btn btn-primary">View Posts</button></a>
+                    <a href="<?php echo site_url('cms/categories/posts/') . $category->getId() . '/page'?>"><button type="button" class="btn btn-primary">View Posts</button></a>
                     <?php if ($category->getCategory()->count() > 0) { ?>
                         <a href="<?php echo site_url('cms/categories/subCategories/') . $category->getId() ?>"><button type="button" class="btn btn-primary">View Sub Categories</button></a>
                     <?php }else{ ?>

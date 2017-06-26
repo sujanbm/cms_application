@@ -117,19 +117,34 @@
 
         public function getPostsFromCategory($id, $per_page = null, $page = null){
             // $query = $this->getEntityManager()->createQuery("SELECT c FROM cms\models\Categories c WHERE (c.id = :id OR c.subCategory = :id)");
-            $query = $this->getEntityManager()->createQuery("
-                SELECT p FROM cms\models\Posts p
-                JOIN cms\models\Categories c WHERE (c.id = p.categories)
-                LEFT JOIN cms\models\Categories cp WHERE (cp.id = c.subCategory)
-                WHERE (c.id = :id or cp.id = :id)
-            ");
-            $query->setParameters(array(
-                'id' => $id,
-            ));
-            $query->setMaxResults($per_page);
-            $query->setFirstResult($page);
+            // $query = $this->getEntityManager()->createQuery("
+            //     SELECT p FROM cms\models\Posts p
+            //     JOIN cms\models\Categories c WHERE (c.id = p.categories)
+            //     LEFT JOIN cms\models\Categories cp WHERE (cp.id = c.subCategory)
+            //     WHERE (c.id = :id or cp.id = :id)
+            // ");
+            // $query->setParameters(array(
+            //     'id' => $id,
+            // ));
+            // $query->setMaxResults($per_page);
+            // $query->setFirstResult($page);
+            //
+            // $result = $query->getResult();
 
-            $result = $query->getResult();
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $qb ->  select('p')
+                ->  from('cms\models\Posts', 'p')
+                ->  leftjoin('cms\models\Categories', 'c', 'WITH', 'c.id = p.categories')
+                ->  leftJoin('cms\models\Categories', 'cp', 'WITH', 'cp.id = c.subCategory')
+                ->  where($qb->expr()->orX('c.id = :id', 'cp.id = :id') )
+                ->  setFirstResult($page)
+                ->  setMaxResults($per_page)
+                // -> where('c.id = :id')
+                ->  setParameter('id', $id);
+
+                // echo $qb->getQuery()->getSQL();
+
+            $result = $qb->getQuery()->getResult();
 
             if ($result != null){
                 // foreach($result as $r){

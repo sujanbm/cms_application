@@ -9,6 +9,8 @@ class CategoriesController extends Admin_Controller {
 
 	public function __construct(){
 
+		parent::__construct();
+
 		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null));
 		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findAll();
 		$this->load->library('pagination');
@@ -59,16 +61,21 @@ class CategoriesController extends Admin_Controller {
 
 	public function posts($id){
 
-		$config['base_url']		=	site_url('cms/categories/posts/').$id;
-		$config['per_page']		=	3;
-		$config['uri-segment']	=	5;
+		$config['base_url']		=	site_url('cms/categories/posts/').$id.'/page';
+		$config['per_page']		=	2;
+		$config['uri-segment']	=	6;
 		$config['total_rows']	=	count($this->doctrine->em->getRepository('cms\models\Categories')->getPostsFromCategory($id));
-
-		// $this->load->config('pagination');
+		// echo "<pre>";
+		// print_r($config);
+		// echo "</pre>";
 		$this->pagination->initialize($config);
+
+
 		$this->admin['links'] = $this->pagination->create_links();
 
-		$page = ($this->uri->segment(5)) ? ($this->uri->segment(5)) : 0;
+		$page = ($this->uri->segment(6)) ? ($this->uri->segment(6)) : 0;
+
+		// echo $page;
 		$this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getPostsFromCategory($id, $config['per_page'], $page);
 
 		$this->load->view('admins/categories/viewPosts', $this->admin);

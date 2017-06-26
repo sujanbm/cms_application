@@ -9,6 +9,7 @@ class PostsController extends Admin_Controller {
 
 	public function __construct(){
 
+		parent::__construct();
 		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null, ));
 		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findBy( array(), array('createdAt' => 'DESC' ));
 		$this->load->library('pagination');

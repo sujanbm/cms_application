@@ -4,7 +4,7 @@
 
 
 $config['full_tag_open'] = '<div><ul  class="pagination pull-right">';
-$config['full_tag_close'] = '</ul></div><!--pagination-->';
+$config['full_tag_close'] = '</ul></div>';
 
 $config['first_link'] = '&laquo; First';
 $config['first_tag_open'] = '<li class="prev page">';
@@ -27,7 +27,7 @@ $config['cur_tag_close'] = '</a></li>';
 
 $config['num_tag_open'] = '<li class="page">';
 $config['num_tag_close'] = '</li>';
-
+// 
 // $config['display_pages'] = FALSE;
 //
-$config['anchor_class'] = 'follow_link';
+// $config['anchor_class'] = 'follow_link';
