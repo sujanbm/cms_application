@@ -28,7 +28,7 @@ class AdminController extends Admin_Controller {
 	}
 
 	public function createAdmin(){
-
+		$this->admin['roles'] = $this->doctrine->em->getRepository('admin\models\AdminRoles')->findAll();
 		$this->load->view('admins/createAdmin', $this->admin);
 
 	}
@@ -36,6 +36,8 @@ class AdminController extends Admin_Controller {
 	public function editAdmin($id){
 
 			$this->admin['admin'] = $this->doctrine->em->getRepository('admin\models\Admin')->find($id);
+			$this->admin['roles'] = $this->doctrine->em->getRepository('admin\models\AdminRoles')->findAll();
+
 			if (!empty($this->admin['admin'])){
 				$this->load->view('admins/editAdmin', $this->admin);
 			}else{
@@ -64,6 +66,7 @@ class AdminController extends Admin_Controller {
 				$admin->setAdminPhoto($this->fileUpload('file'));
 			}
 			$admin->setAdminStatus($this->input->post('adminStatus'));
+			$admin->setRole($this->doctrine->em->getRepository('admin\models\AdminRoles')->find($this->input->post('role')));
 
 			$this->doctrine->em->persist($admin);
 			$this->doctrine->em->flush();
@@ -93,7 +96,10 @@ class AdminController extends Admin_Controller {
 					$admin->setAdminPhoto($this->fileUpload('file'));
 				}
 				$admin->setUpdatedAt();
+				$admin->setRole($this->doctrine->em->getRepository('admin\models\AdminRoles')->find($this->input->post('role')));
+				
 				$this->session->set_flashdata('message', 'Updated '. $this->input->post('adminName'). " Admin");
+
 				$this->doctrine->em->flush();
 
 				redirect(site_url('admin'));

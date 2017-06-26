@@ -86,13 +86,13 @@
 
     private $updatedAt;
 
-    // /**
-    // * @var boolean $softDelete
-    // *
-    // *   @ORM\Column(name="softDelete", type="boolean", nullable=false)
-    // */
-    //
-    // private $softDelete;
+    /**
+    * Many Admins have one AdminRole
+    * @ORM\ManyToOne(targetEntity="AdminRoles", inversedBy="admins")
+    * @ORM\JoinColumn(name="roleId", referencedColumnName="id", nullable=false)
+    */
+
+    private $role;
 
 
     public function getId(){
@@ -197,6 +197,17 @@
 
     }
 
+    public function setRole($role){
+
+        $this->role = $role;
+
+    }
+
+    public function getRole(){
+
+        return $this->role;
+        
+    }
     // public function setSoftDelete($action){
     //
     //     $this->softDelete = $action;

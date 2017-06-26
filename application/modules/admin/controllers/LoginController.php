@@ -17,7 +17,7 @@ class LoginController extends Front_Controller {
 
         }
 
-        $this->load->library('form_valdiation');
+        $this->load->library('form_validation');
     }
 
     public function index(){

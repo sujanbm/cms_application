@@ -33,6 +33,11 @@ $config = array(
             'label' =>  'Status',
             'rules' =>  'required'
         ),
+        array(
+            'field' =>  'role',
+            'label' =>  'Admin Role',
+            'rules' =>  'required'
+        ),
     ),
     'admin/update' => array(
         array(
@@ -54,7 +59,12 @@ $config = array(
             'field' =>  'adminStatus',
             'label' =>  'Status',
             'rules' =>  'required'
-        )
+        ),
+        array(
+            'field' =>  'role',
+            'label' =>  'Admin Role',
+            'rules' =>  'required'
+        ),
     ),
     'post/create' => array(
         array(

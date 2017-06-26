@@ -47,6 +47,15 @@
                    <span class="help-block margin-b-0"><?php form_error('adminStatus') ?></span>
                </div>
                <div class="form-group">
+                   <label for="role">Admin Role</label>
+                   <select class="form-control" name="role" value="<?php echo set_value('role') ?>">
+                       <?php if (!empty($roles)) foreach ($roles as $role) { ?>
+                           <option value="<?php echo $role->getId(); ?>"><?php echo $role->getRoleName(); ?></option>
+                       <?php }?>
+                   </select>
+                   <span><?php echo form_error('role') ?></span>
+               </div>
+               <div class="form-group">
                    <label for="adminPhoto">Profile Photo</label>
                    <input type="file" class="form-control" name="file" id="file" >
                </div>
