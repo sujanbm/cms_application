@@ -15,10 +15,12 @@
            <div class="form-group">
                <label for="postTitle">Post Title</label>
                <input type="text" class="form-control" id="postTitle" name="postTitle" value="<?php echo $post->getPostTitle(); ?>" required>
+               <span><?php echo form_error('postTitle') ?></span>
            </div>
            <div class="form-group">
                <label for="postBody">Post Description</label>
                <textarea name="postBody" class="form-control" rows="8" cols="80" ><?php echo $post->getPostBody();?></textarea>
+               <span><?php echo form_error('postBody') ?></span>
            </div>
            <div class="form-group">
                <label for="categories">Category</label>
@@ -33,8 +35,8 @@
 
                             <?php endif; ?>
                     <?php } ?>
-
                </select>
+               <span><?php echo form_error('categories') ?></span>
            </div>
            <div class="form-group">
                <label for="photoPath">Post's Picture</label>

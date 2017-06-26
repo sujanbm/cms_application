@@ -15,7 +15,8 @@
        <form action="<?php echo site_url('cms/Categories/addCategory');?>" class="form" role="form" method="post" enctype="multipart/form-data" id = "FormId">
            <div class="form-group">
                <label for="categoryName">Category Name</label>
-               <input type="text" class="form-control" id="categoryName" name="categoryName" required>
+               <input type="text" class="form-control" id="categoryName" name="categoryName" value="<?php echo set_value('categoryName') ?>" required>
+               <span><?php echo form_error('categoryName') ?></span>
            </div>
            <div class="form-group">
                <label for="subCategoryId">Parent Category</label>

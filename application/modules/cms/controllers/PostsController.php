@@ -18,17 +18,17 @@ class PostsController extends Admin_Controller {
 
 	public function index()
 	{
-		// $this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
 		$config['base_url']		=	site_url('cms/posts/index');
 		$config['per_page']		=	3;
 		$config['uri-segment']	=	4;
 		$config['total_rows']	=	count($this->doctrine->em->getRepository('cms\models\Posts')->findAll());
 
-		// $this->load->config('pagination');
 		$this->pagination->initialize($config);
 
 		$this->admin['links'] = $this->pagination->create_links();
+
 		$page = ($this->uri->segment(4)) ? ($this->uri->segment(4)) : 0;
+
 		$this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->fetch_users($config['per_page'], $page);
 
 		$this->load->view('admins/posts/viewPost', $this->admin);
@@ -42,19 +42,29 @@ class PostsController extends Admin_Controller {
 
 	public function addPost(){
 
-		$post = new Posts();
-		$post->setPostTitle($this->input->post('postTitle'));
-		$post->setPostBody($this->input->post('postBody'));
-		$post->setCreatedAt();
-		$post->setCategories($this->doctrine->em->getRepository('cms\models\Categories')->find($this->input->post('categories')));
-		if ($_FILES['file']['name'] != null) {
-			$post->setPhotoPath($this->fileUpload('file'));
-		}
-		$this->doctrine->em->persist($post);
-		$this->doctrine->em->flush();
-		$this->session->set_flashdata('message', 'Post succesfully added!');
-		redirect(site_url('cms/posts'));
+		if($this->form_validation->run('post/create') == FALSE){
 
+			$this->createPost();
+			
+		}else{
+
+			$post = new Posts();
+			$post->setPostTitle($this->input->post('postTitle'));
+			$post->setPostBody($this->input->post('postBody'));
+			$post->setCreatedAt();
+			$post->setCategories($this->doctrine->em->getRepository('cms\models\Categories')->find($this->input->post('categories')));
+
+			if ($_FILES['file']['name'] != null) {
+				$post->setPhotoPath($this->fileUpload('file'));
+			}
+
+			$this->doctrine->em->persist($post);
+			$this->doctrine->em->flush();
+
+			$this->session->set_flashdata('message', 'Post succesfully added!');
+			redirect(site_url('cms/posts'));
+
+		}
 
 	}
 
@@ -67,33 +77,42 @@ class PostsController extends Admin_Controller {
 
 	public function updatePost(){
 
-		$post = $this->doctrine->em->getRepository('cms\models\Posts')->find($this->input->post('id'));
+		if($this->form_validation->run('post/update') == FALSE){
 
-		if($post != null){
-			$post->setPostTitle($this->input->post('postTitle'));
-			$post->setPostBody($this->input->post('postBody'));
-			if ($_FILES['file']['name'] != null) {
+			$this->editPost($this->input->post('id'));
 
-				//Removes the old photo
-				$path = FCPATH.'/uploads/posts/'.$post->getPhotoPath();
-				if(file_exists($path)) {
-					unlink($path);
+		}else{
+
+			$post = $this->doctrine->em->getRepository('cms\models\Posts')->find($this->input->post('id'));
+
+			if($post != null){
+				$post->setPostTitle($this->input->post('postTitle'));
+				$post->setPostBody($this->input->post('postBody'));
+				if ($_FILES['file']['name'] != null) {
+
+					//Removes the old photo
+					$path = FCPATH.'/uploads/posts/'.$post->getPhotoPath();
+					if(file_exists($path)) {
+						unlink($path);
+					}
+
+					$path = $this->fileUpload('file');
+					$post->setPhotoPath($path);
+
 				}
 
-				$path = $this->fileUpload('file');
-				$post->setPhotoPath($path);
+				$post->setUpdatedAt();
+				$post->setCategories($this->doctrine->em->getRepository('cms\models\Categories')->find($this->input->post('categories')));
 
+				$this->doctrine->em->flush();
+				$this->session->set_flashdata('message', 'The Post ' .$post->getPostTitle(). ' has been updated!');
+				redirect(site_url('cms/posts'));
+			}else{
+				$this->session->set_flashdata('errorMessage', 'Error Occured! Could not update!!');
+				redirect(site_url('cms/posts/'));
 			}
-			$post->setUpdatedAt();
-			$post->setCategories($this->doctrine->em->getRepository('cms\models\Categories')->find($this->input->post('categories')));
-			$this->doctrine->em->flush();
-			$this->session->set_flashdata('message', 'The Post ' .$post->getPostTitle(). ' has been updated!');
-			redirect(site_url('cms/posts'));
-		}else{
-			$this->session->set_flashdata('errorMessage', 'Error Occured! Could not update!!');
-			redirect(site_url('cms/posts/'));
-		}
 
+		}
 
 	}
 

@@ -16,6 +16,7 @@
                <div class="form-group">
                    <label for="categoryName">Category Name</label>
                    <input type="text" class="form-control" id="categoryName" name="categoryName" value="<?php echo $cat->getCategoryName(); ?>" required>
+                   <span><?php echo form_error('categoryName') ?></span>
                </div>
                <?php if ($cat->getSubCategory() != null){ ?>
                    <div class="form-group">
