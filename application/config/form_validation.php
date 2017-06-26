@@ -60,12 +60,12 @@ $config = array(
         array(
             'field' =>  'postTitle',
             'label' =>  'Post Title',
-            'rules' =>  'required'
+            'rules' =>  'required|min_length[8]|max_length[55]'
         ),
         array(
             'field' =>  'postBody',
             'label' =>  'Post Description',
-            'rules' =>  'requried'
+            'rules' =>  'required'
         ),
         array(
             'field' =>  'categories',

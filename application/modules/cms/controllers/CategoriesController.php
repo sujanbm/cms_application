@@ -13,7 +13,7 @@ class CategoriesController extends Admin_Controller {
 
 		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null));
 		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findAll();
-		$this->load->library('pagination');
+		$this->load->library(array('pagination', 'form_validation'));
 
 	}
 	public function index(){
@@ -75,7 +75,7 @@ class CategoriesController extends Admin_Controller {
 				$this->session->set_flashdata('message', 'Category '.$category->getCategoryName().' succesfully updated!');
 
 				redirect(site_url('cms/categories'));
-				
+
 			}else{
 				$this->session->set_flashdata('errorMessage', 'Error Occured!');
 				redirect(site_url('cms/categories/editCategory/').$this->input->post('id'));

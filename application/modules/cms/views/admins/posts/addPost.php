@@ -19,7 +19,7 @@
            </div>
            <div class="form-group">
                <label for="postBody">Post Description</label>
-               <textarea name="postBody" class="form-control" rows="8" cols="80"><?php echo set_value('postBody') ?></textarea>
+               <textarea name="postBody" class="form-control" rows="8" cols="80" required><?php echo set_value('postBody') ?></textarea>
                <span><?php echo form_error('postBody') ?></span>
            </div>
            <div class="form-group">

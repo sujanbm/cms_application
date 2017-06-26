@@ -12,7 +12,8 @@ class PostsController extends Admin_Controller {
 		parent::__construct();
 		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null, ));
 		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findBy( array(), array('createdAt' => 'DESC' ));
-		$this->load->library('pagination');
+
+		$this->load->library(array('pagination', 'form_validation'));
 
 	}
 
@@ -45,7 +46,7 @@ class PostsController extends Admin_Controller {
 		if($this->form_validation->run('post/create') == FALSE){
 
 			$this->createPost();
-			
+
 		}else{
 
 			$post = new Posts();
