@@ -15,26 +15,30 @@
            <form action="<?php echo site_url('admin/updateAdmin');?>" class="form" role="form" method="post" enctype="multipart/form-data" id = "FormId">
                <div class="form-group">
                    <label for="adminName">Name</label>
-                   <input type="text" class="form-control" id="adminName" name="adminName" placeholder="Name of the admin" value="<?php echo $admin->getAdminName(); ?>" required>
+                   <input type="text" class="form-control" id="adminName" name="adminName" placeholder="Name of the admin" value="<?php if(!empty($admin)) echo $admin->getAdminName(); ?>" required>
+                   <span><?php echo form_error('adminName') ?></span>
                </div>
                <div class="form-group">
                    <label for="adminEmail">Email</label>
-                   <input type="email" class="form-control" name="adminEmail" placeholder="example@example.com" value="<?php echo $admin->getAdminEmail(); ?>" required>
+                   <input type="email" class="form-control" name="adminEmail" placeholder="example@example.com" value="<?php if(!empty($admin)) echo $admin->getAdminEmail(); ?>" required>
+                   <span><?php echo form_error('adminEmail') ?></span>
                </div>
                <div class="form-group">
                    <label for="adminPhone">Phone No.</label>
-                   <input type="number" class="form-control" name="adminPhone" placeholder="9876543210" value="<?php echo $admin->getAdminPhone(); ?>" required>
+                   <input type="number" class="form-control" name="adminPhone" placeholder="9876543210" value="<?php if(!empty($admin)) echo $admin->getAdminPhone(); ?>" required>
+                   <span><?php echo form_error('adminPhone') ?></span>
                </div>
                <div class="form-group">
                    <label for="adminStatus">Status</label>
                    <select class="form-control" name="adminStatus">
-                       <option value="0" <?php if($admin->getAdminStatus() == 0) echo "selected"; ?> >InActive</option>
-                       <option value="1" <?php if($admin->getAdminStatus() == 1) echo "selected"; ?>>Active</option>
+                       <option value="0" <?php if(!empty($admin)) { if($admin->getAdminStatus() == 0) echo "selected"; } ?> >InActive</option>
+                       <option value="1" <?php if(!empty($admin)) { if($admin->getAdminStatus() == 1) echo "selected"; } ?>>Active</option>
                    </select>
+                   <span><?php echo form_error('adminStatus') ?></span>
                </div>
                <div class="form-group">
                    <label for="adminPhoto">Profile Photo</label>
-                   <?php
+                   <?php if(!empty($admin))
                         if($admin->getAdminPhoto() != null){
                                     $path = $admin->getAdminPhoto();
                                     if(file_exists(FCPATH."uploads/admins/".$path)){?>
@@ -45,7 +49,7 @@
                                }?>
                    <input type="file" class="form-control" name="file" id="file">
                </div>
-               <input type="hidden" name="id" value="<?php echo $admin->getId(); ?>">
+               <input type="hidden" name="id" value="<?php if(!empty($admin)) echo $admin->getId(); ?>">
                <div class="form-group">
                    <button class="btn btn-success">Save</button>
                </div>

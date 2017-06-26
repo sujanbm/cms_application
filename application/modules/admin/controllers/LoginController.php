@@ -16,9 +16,14 @@ class LoginController extends Front_Controller {
             redirect(site_url('admin'));
 
         }
+
+        $this->load->library('form_valdiation');
     }
+
     public function index(){
+
         $this->load->view('login/login');
+
     }
 
     public function verify(){

@@ -17,14 +17,14 @@ class AdminController extends Admin_Controller {
 		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findAll();
 		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
 
+		$this->load->library('form_validation');
+
 	}
 
-	public function index()
-	{
-		// $admin['admins'] = $this->doctrine->em->getRepository('admin\models\Admin')->findAll();
-		// $admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findAll();
- 	// 	$admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
+	public function index(){
+
 		$this->load->view('admins/viewAdmin', $this->admin);
+
 	}
 
 	public function createAdmin(){
@@ -35,60 +35,73 @@ class AdminController extends Admin_Controller {
 
 	public function editAdmin($id){
 
-		$this->admin['admin'] = $this->doctrine->em->getRepository('admin\models\Admin')->find($id);
-		if (!empty($this->admin['admin'])){
-			$this->load->view('admins/editAdmin', $this->admin);
-		}else{
-			$this->session->set_flashdata('errorMessage', 'Admin with that id does not exist');
-			redirect(site_url('admin'));
-		}
+			$this->admin['admin'] = $this->doctrine->em->getRepository('admin\models\Admin')->find($id);
+			if (!empty($this->admin['admin'])){
+				$this->load->view('admins/editAdmin', $this->admin);
+			}else{
+				$this->session->set_flashdata('errorMessage', 'Admin with that id does not exist');
+				redirect(site_url('admin'));
+			}
 
 	}
 
 	public function addAdmin(){
 
-		$admin = new Admin();
-		$admin->setAdminName($this->input->post('adminName'));
-		$admin->setAdminEmail($this->input->post('adminEmail'));
-		$admin->setAdminPhone($this->input->post('adminPhone'));
-		$admin->setCreatedAt();
-		$password = password_hash($this->input->post('adminPassword'), PASSWORD_DEFAULT);
-		$admin->setAdminPassword($password);
-		if ($_FILES['file']['name'] != null) {
-			$admin->setAdminPhoto($this->fileUpload('file'));
+		if($this->form_validation->run('admin/create') == FALSE){
+
+			$this->createAdmin();
+
+		}else{
+
+			$admin = new Admin();
+			$admin->setAdminName($this->input->post('adminName'));
+			$admin->setAdminEmail($this->input->post('adminEmail'));
+			$admin->setAdminPhone($this->input->post('adminPhone'));
+			$admin->setCreatedAt();
+			$password = password_hash($this->input->post('adminPassword'), PASSWORD_DEFAULT);
+			$admin->setAdminPassword($password);
+			if ($_FILES['file']['name'] != null) {
+				$admin->setAdminPhoto($this->fileUpload('file'));
+			}
+			$admin->setAdminStatus($this->input->post('adminStatus'));
+
+			$this->doctrine->em->persist($admin);
+			$this->doctrine->em->flush();
+			$this->session->set_flashdata('message', 'Admin '.$this->input->post('adminName'). ' has been added');
+			redirect(site_url('admin/'));
+
 		}
-		$admin->setAdminStatus($this->input->post('adminStatus'));
-
-		$this->doctrine->em->persist($admin);
-		$this->doctrine->em->flush();
-		$this->session->set_flashdata('message', 'Admin '.$this->input->post('adminName'). ' has been added');
-		redirect(site_url('admin/'));
-
 
 	}
 
 	public function updateAdmin(){
 
-		$admin = $this->doctrine->em->getRepository('admin\models\Admin')->find($this->input->post('id'));
-		if (!empty($admin)){
+		if($this->form_validation->run('admin/update') == FALSE){
 
-			$admin->setAdminName($this->input->post('adminName'));
-			$admin->setAdminEmail($this->input->post('adminEmail'));
-			$admin->setAdminPhone($this->input->post('adminPhone'));
-			$admin->setAdminStatus($this->input->post('adminStatus'));
-			if ($_FILES['file']['name'] != null) {
-				$admin->setAdminPhoto($this->fileUpload('file'));
-			}
-			$admin->setUpdatedAt();
-			$this->session->set_flashdata('message', 'Updated '. $this->input->post('adminName'). " Admin");
-			$this->doctrine->em->flush();
+			$this->editAdmin($this->input->post('id'));
 
-			redirect(site_url('admin'));
 		}else{
-			$this->session->set_flashdata('errorMessage', 'Some error occured, could not update');
-			redirect(site_url('admin'));
-		}
 
+			$admin = $this->doctrine->em->getRepository('admin\models\Admin')->find($this->input->post('id'));
+			if (!empty($admin)){
+
+				$admin->setAdminName($this->input->post('adminName'));
+				$admin->setAdminEmail($this->input->post('adminEmail'));
+				$admin->setAdminPhone($this->input->post('adminPhone'));
+				$admin->setAdminStatus($this->input->post('adminStatus'));
+				if ($_FILES['file']['name'] != null) {
+					$admin->setAdminPhoto($this->fileUpload('file'));
+				}
+				$admin->setUpdatedAt();
+				$this->session->set_flashdata('message', 'Updated '. $this->input->post('adminName'). " Admin");
+				$this->doctrine->em->flush();
+
+				redirect(site_url('admin'));
+			}else{
+				$this->session->set_flashdata('errorMessage', 'Some error occured, could not update');
+				redirect(site_url('admin'));
+			}
+		}
 	}
 
 	// public function deleteAdmin(){
