@@ -51,65 +51,45 @@
 
         }
 
-        public function getPostsByCategory($id){
-
-            $category = $this->getEntityManager()->getRepository('cms\models\Categories')->find($id);
-            if ($category != null){
-                $posts = $category->getPosts();
-                if ($posts->count() > 0){
-                foreach($posts as $post){
-                    $c['id'] = $post->getId();
-                    $c['categoryName'] = $category->getCategoryName();
-
-                    $c['postTitle'] = $post->getPostTitle();
-                    $c['postBody'] = $post->getPostBody();
-                    $c['createdAt'] = $post->getCreatedAt();
-                    if($post->getUpdatedAt() != null){
-                      $c['updatedAt'] = $post->getUpdatedAt()->format('Y-m-d H:i:s');
-                  }else {
-                      $c['updatedAt'] = $post->getUpdatedAt();
-                  }
-                    $p[] = $c;
-                }
-                return $p;
-                }else{
-                    return $posts;
-                }
-            }else{
-                redirect(site_url('cms/categories'));
-            }
-
-        }
-
         public function getPosts($id){
-            $query = $this->getEntityManager()->createQuery("SELECT c FROM cms\models\Categories c WHERE (c.id = :id OR c.subCategory = :id)");
-            $query->setParameter('id', $id);
-            $result = $query->getResult();
+
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $qb ->  select('post')
+                ->  from('cms\models\Posts', 'post')
+                ->  join('cms\models\Categories', 'parent', 'WITH', 'parent.id = post.categories')
+                ->  leftJoin('cms\models\Categories', 'child', 'WITH', 'child.id = parent.subCategory')
+                ->  where($qb->expr()->orX('parent.id = :id', 'child.id = :id'))
+                ->  setParameter('id', $id);
+
+
+            $result = $qb->getQuery()->getResult();
+
             if ($result != null){
-                foreach($result as $r){
-                    $posts = $r->getPosts();
-                    if ($posts->count() > 0){
-                        foreach($posts as $post){
-                                $c['id'] = $post->getId();
-                                $c['categoryName'] = $r->getCategoryName();
-                                $c['photoPath'] = $post->getPhotoPath();
-                                $c['postTitle'] = $post->getPostTitle();
-                                $c['postBody'] = $post->getPostBody();
-                                $c['createdAt'] = $post->getCreatedAt();
-                                if($post->getUpdatedAt() != null){
-                                  $c['updatedAt'] = $post->getUpdatedAt()->format('Y-m-d H:i:s');
-                              }else {
-                                  $c['updatedAt'] = $post->getUpdatedAt();
-                              }
-                                $p[] = $c;
-                        }
-                    }
-                }
-                if (!empty($p)){
-                    return $p;
-                }else{
-                    return $posts;
-                }
+                // foreach($result as $r){
+                //     $posts = $r->getPosts();
+                //     if ($posts->count() > 0){
+                //         foreach($posts as $post){
+                //                 $c['id'] = $post->getId();
+                //                 $c['categoryName'] = $r->getCategoryName();
+                //                 $c['photoPath'] = $post->getPhotoPath();
+                //                 $c['postTitle'] = $post->getPostTitle();
+                //                 $c['postBody'] = $post->getPostBody();
+                //                 $c['createdAt'] = $post->getCreatedAt();
+                //                 if($post->getUpdatedAt() != null){
+                //                   $c['updatedAt'] = $post->getUpdatedAt()->format('Y-m-d H:i:s');
+                //               }else {
+                //                   $c['updatedAt'] = $post->getUpdatedAt();
+                //               }
+                //                 $p[] = $c;
+                //         }
+                //     }
+                // }
+                // if (!empty($p)){
+                //     return $p;
+                // }else{
+                //     return $posts;
+                // }
+                return $result;
             }else{
                 redirect(site_url('cms/categories'));
             }

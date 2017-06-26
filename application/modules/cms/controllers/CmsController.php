@@ -5,6 +5,10 @@ use cms\models\Categories;
 use cms\models\Posts;
 class CmsController extends Front_Controller {
 
+
+	public function __construct(){
+		$this->load->library('pagination');
+	}
 	/**
 	 * Index Page for this controller.
 	 *
@@ -22,14 +26,37 @@ class CmsController extends Front_Controller {
 	 */
 	public function index()
 	{
+		$config['base_url'] = site_url('cms/index');
+		$config['per_page'] = 5;
+		$config['total_rows'] = count($this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts());
+		$config['uri-segment'] = 3;
+		$config['display_pages'] = false;
+
+		$this->pagination->initialize($config);
+
+		$posts['links'] = $this->pagination->create_links();
+		$page = ($this->uri->segment(3)) ? ($this->uri->segment(3)) : 0;
+		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->fetch_users($config['per_page'], $page);
+
 		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null));
-		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
+
+		// $posts['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
 		$this->load->view('front/viewPost', $posts);
 	}
 
 	public function category($id){
 		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
-		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getPosts($id);
+
+		$config['base_url'] = site_url('cms/category/').$id.'/pages';
+		$config['per_page'] = 2;
+		$config['total_rows'] = count($this->doctrine->em->getRepository('cms\models\Categories')->getPosts($id));
+		$config['uri-segment'] = 5;
+
+		$this->pagination->initialize($config);
+
+		$posts['links'] = $this->pagination->create_links();
+		$page = ($this->uri->segment(5)) ? ($this->uri->segment(5)) : 0;
+		$posts['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getPostsFromCategory($id, $config['per_page'], $page);
 		$this->load->view('front/viewPost', $posts);
 
 	}
