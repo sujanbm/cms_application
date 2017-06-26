@@ -49,33 +49,3 @@
 </section><!-- /.content -->
 
 <?php require_once(APPPATH. '/views/admins/footer.php'); ?>
-
-
-
-<!-- <?php foreach ($posts as $post){ ?>
-
-    <div class="jumbotron">
-        <h3><?php echo $post['postTitle']; ?></h3>
-        <hr>
-        <h6><?php echo $post['categoryName'] ?></h6>
-        <small ><?php echo "Created At: ". $post['createdAt'] ?></small>
-        <hr>
-        <?php
-        if($post['photoPath'] != null){
-            $path = $post['photoPath'];
-            if(file_exists(FCPATH."uploads/".$path)){?>
-            <img src="<?php echo base_url();?>/uploads/<?php echo $post['photoPath']?>" class="img-responsive img-rounded" width="100%" height="auto" alt="">
-            <?php }else{?>
-              <img src="http://gazettereview.com/wp-content/uploads/2016/03/facebook-avatar.jpg" alt="">
-           <?php }
-        }?>
-
-        <p align="justify"><?php echo $post['postBody'] ?></p>
-        <small><?php echo "Updated At: ". $post['updatedAt'] ?></small>
-        <p>
-            <a href="<?php echo site_url('cms/posts/editPost/') . $post['id'] ?>"><button type="button" class="btn btn-primary">Edit</button></a>
-            <a href="<?php echo site_url('cms/posts/deletePost/') . $post['id']?>"><button type="button" class="btn btn-danger" onclick="return confirm('Are you sure want to delete');">Delete</button></a>
-        </p>
-  </div>
-
-<?php } ?> -->

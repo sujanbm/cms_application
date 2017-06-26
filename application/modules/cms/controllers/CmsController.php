@@ -32,6 +32,9 @@ class CmsController extends Front_Controller {
 		$config['uri-segment'] = 3;
 		$config['display_pages'] = false;
 
+		$config['full_tag_open'] = '<div><ul  class="pagination">';
+
+
 		$this->pagination->initialize($config);
 
 		$posts['links'] = $this->pagination->create_links();
@@ -40,7 +43,6 @@ class CmsController extends Front_Controller {
 
 		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array ('subCategory' => null));
 
-		// $posts['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->getAllPosts();
 		$this->load->view('front/viewPost', $posts);
 	}
 
@@ -48,7 +50,7 @@ class CmsController extends Front_Controller {
 		$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
 
 		$config['base_url'] = site_url('cms/category/').$id.'/pages';
-		$config['per_page'] = 2;
+		$config['per_page'] = 4;
 		$config['total_rows'] = count($this->doctrine->em->getRepository('cms\models\Categories')->getPosts($id));
 		$config['uri-segment'] = 5;
 

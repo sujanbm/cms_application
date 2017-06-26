@@ -65,16 +65,21 @@ class PostsRepository extends EntityRepository {
 
         public function fetch_users($limit, $start){
 
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $qb ->  select('p')
+                ->  from('cms\models\Posts', 'p')
+                ->  orderBy('p.id', 'DESC')
+                ->  setFirstResult($start)
+                ->  setMaxResults($limit);
+                
+            $post = $qb->getQuery()->getResult();
 
-
-                $post = $this->getEntityManager()->getRepository('cms\models\Posts')->findBy(array(), array('createdAt'=>'DESC'), $limit, $start);
-                if($post != null){
-                    return $post;
-                }
-                else{
-                    return false;
-
-                }
+            if($post != null){
+                return $post;
+            }
+            else{
+                redirect ('cms');
+            }
         }
 
 
