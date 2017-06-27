@@ -27,7 +27,9 @@ $config['cur_tag_close'] = '</a></li>';
 
 $config['num_tag_open'] = '<li class="page">';
 $config['num_tag_close'] = '</li>';
-// 
+
+$config['page_query_string'] = TRUE;
+//
 // $config['display_pages'] = FALSE;
 //
 // $config['anchor_class'] = 'follow_link';

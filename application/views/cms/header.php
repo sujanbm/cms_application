@@ -49,7 +49,7 @@
                     <?php foreach ($categories as $category): ?>
                         <?php if ($category->getCategory()->count() < 1) { ?>
                             <li class="nav-item">
-                              <a class="nav-link" href="<?php echo site_url('cms/category/') . $category->getId() . '/pages'?>"> <?php echo $category->getCategoryName() ?> <span class="sr-only"></span></a>
+                              <a class="nav-link" href="<?php echo site_url('cms/category/') . $category->getId()?>"> <?php echo $category->getCategoryName() ?> <span class="sr-only"></span></a>
                             </li>
                         <?php }else{ ?>
                             <li class="nav-item dropdown">
@@ -59,10 +59,10 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <?php foreach ($category->getCategory() as $c): ?>
-                                    <li><a class="dropdown-item" href="<?php echo site_url('cms/category/') . $c->getId() .'/pages'?>"><?php echo $c->getCategoryName();?></a></li>
+                                    <li><a class="dropdown-item" href="<?php echo site_url('cms/category/') . $c->getId()?>"><?php echo $c->getCategoryName();?></a></li>
                                 <?php endforeach; ?>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="<?php echo site_url('cms/category/') . $category->getId() . '/pages'?>"> <?php echo $category->getCategoryName(); ?></a></li>
+                                <li><a href="<?php echo site_url('cms/category/') . $category->getId()?>"> <?php echo $category->getCategoryName(); ?></a></li>
                             </ul>
                           </li>
                             <?php } ?>

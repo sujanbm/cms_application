@@ -28,7 +28,7 @@ class PostsController extends Admin_Controller {
 
 		$this->admin['links'] = $this->pagination->create_links();
 
-		$page = ($this->uri->segment(4)) ? ($this->uri->segment(4)) : 0;
+		$page = $this->input->get('per_page')?:0;
 
 		$this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Posts')->fetch_users($config['per_page'], $page);
 

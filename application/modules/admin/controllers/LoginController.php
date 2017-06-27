@@ -37,15 +37,17 @@ class LoginController extends Front_Controller {
             if (password_verify($password, $admin->getAdminPassword())){
 
                 $logged_in = array(
-                    'id' => $admin->getId(),
-                    'email' => $admin->getAdminEmail(),
-                    'name' => $admin->getAdminName(),
-                    'photo' => $admin->getAdminPhoto(),
-                    'date' => $admin->getCreatedAt(),
+                    'id'        =>  $admin->getId(),
+                    'email'     =>  $admin->getAdminEmail(),
+                    'name'      =>  $admin->getAdminName(),
+                    'photo'     =>  $admin->getAdminPhoto(),
+                    'roleId'    =>  $admin->getRole()->getId(),
+                    'roleName'  =>  $admin->getRole()->getRoleName(),
+                    'date'      =>  $admin->getCreatedAt(),
                  );
 
                  $this->session->set_userdata('logged_in', $logged_in);
-                 $this->session->set_flashdata('message', 'Welcome'.$admin->getAdminName());
+                 $this->session->set_flashdata('message', 'Welcome '.$admin->getAdminName());
                  redirect('admin');
             }else{
                 $this->session->set_flashdata('errorMessage', 'Wrong Password');

@@ -87,16 +87,17 @@ class CategoriesController extends Admin_Controller {
 
 	public function posts($id){
 
-		$config['base_url']		=	site_url('cms/categories/posts/').$id.'/page';
-		$config['per_page']		=	2;
-		$config['uri-segment']	=	6;
+		$config['base_url']		=	site_url('cms/categories/posts/').$id;
+		$config['per_page']		=	3;
+		$config['uri-segment']	=	5;
 		$config['total_rows']	=	count($this->doctrine->em->getRepository('cms\models\Categories')->getPostsFromCategory($id));
 
 		$this->pagination->initialize($config);
 
 		$this->admin['links'] = $this->pagination->create_links();
 
-		$page = ($this->uri->segment(6)) ? ($this->uri->segment(6)) : 0;
+		// $page = ($this->uri->segment()) ? ($this->uri->segment(5)) : 0;
+		$page = $this->input->get('per_page')?:0;
 
 		$this->admin['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getPostsFromCategory($id, $config['per_page'], $page);
 

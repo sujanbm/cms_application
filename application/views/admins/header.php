@@ -144,7 +144,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <?php foreach ($categories as $c): ?>
-                                    <li><a href="<?php echo site_url('cms/categories/posts/').$c->getId()."/page"; ?>"><i class="fa fa-angle-double-right"></i> <?php echo $c->getCategoryName(); ?> </a></li>
+                                    <li><a href="<?php echo site_url('cms/categories/posts/').$c->getId(); ?>"><i class="fa fa-angle-double-right"></i> <?php echo $c->getCategoryName(); ?> </a></li>
                                 <?php endforeach; ?>
                             </ul>
                         </li>

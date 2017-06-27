@@ -19,6 +19,7 @@
             <th>Email</th>
             <th>Phone</th>
             <th>Status</th>
+            <th>Roles</th>
             <th>Actions</th>
         </tr>
 
@@ -40,6 +41,7 @@
                 <td><?php echo $admin->getAdminEmail(); ?></td>
                 <td><?php echo $admin->getAdminPhone(); ?></td>
                 <td><?php if($admin->getAdminStatus()){?> <span class="badge bg-green">Active</span><?php }else{ ?> <span class="badge bg-red">Inactive</span> <?php  } ?></td>
+                <td><?php echo $admin->getRole()->getRoleName(); ?></td>
                 <td>
                     <a href="<?php echo site_url('admin/editAdmin/') . $admin->getId(); ?>"><button type="button" class="btn btn-primary btn-flat">Edit</button></a>
                 </td>

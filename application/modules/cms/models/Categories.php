@@ -112,7 +112,7 @@
     public function getCategory(){
 
         return $this->category;
-        
+
     }
 
   }

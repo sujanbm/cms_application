@@ -49,6 +49,7 @@ class AdminController extends Admin_Controller {
 
 	public function addAdmin(){
 
+		// $this->form_validation->set_rules('adminEmail', 'EMail', 'callback_email_check');
 		if($this->form_validation->run('admin/create') == FALSE){
 
 			$this->createAdmin();
@@ -97,7 +98,7 @@ class AdminController extends Admin_Controller {
 				}
 				$admin->setUpdatedAt();
 				$admin->setRole($this->doctrine->em->getRepository('admin\models\AdminRoles')->find($this->input->post('role')));
-				
+
 				$this->session->set_flashdata('message', 'Updated '. $this->input->post('adminName'). " Admin");
 
 				$this->doctrine->em->flush();
@@ -159,6 +160,23 @@ class AdminController extends Admin_Controller {
 			$this->image_lib->resize();
 
 			return $file_name;
+		}
+
+	}
+
+	public function email_check($email){
+
+		echo "I am here";
+		die();
+		if ($this->doctrine->em->getRepository('cms\models\Admin')->findOneBy(array('adminEmail'=>$email)) != null){
+
+		 	$this->form_validation->set_message('email_check', 'The email is already in use, please use another email');
+			return FALSE;
+
+		}else{
+
+			return TRUE;
+
 		}
 
 	}
