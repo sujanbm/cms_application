@@ -18,6 +18,7 @@ class AdminController extends Admin_Controller {
 		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
 
 		$this->load->library('form_validation');
+		$this->form_validation->CI =& $this;
 
 	}
 
@@ -166,9 +167,7 @@ class AdminController extends Admin_Controller {
 
 	public function email_check($email){
 
-		echo "I am here";
-		die();
-		if ($this->doctrine->em->getRepository('cms\models\Admin')->findOneBy(array('adminEmail'=>$email)) != null){
+		if ($this->doctrine->em->getRepository('admin\models\Admin')->findOneBy(array('adminEmail'=>$email)) != null){
 
 		 	$this->form_validation->set_message('email_check', 'The email is already in use, please use another email');
 			return FALSE;
@@ -179,6 +178,17 @@ class AdminController extends Admin_Controller {
 
 		}
 
+	}
+
+	public function name_check($str){
+
+		if ($str == "test" || $str == "Shayandra"){
+			$this->form_validation->set_message('name_check', 'The name '.$str.' is not allowed');
+			return FALSE;
+		}
+		else{
+			return TRUE;
+		}
 	}
 
 }

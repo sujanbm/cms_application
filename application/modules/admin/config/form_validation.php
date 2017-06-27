@@ -6,13 +6,12 @@ $config = array(
         array(
             'field' =>  'adminName',
             'label' =>  'Name',
-            'rules' =>  'required'
+            'rules' =>  'required|callback_name_check',
         ),
         array(
             'field' =>  'adminEmail',
             'label' =>  'Email',
-            'rules' =>  'trim|required|valid_email|callback_check'
-            // 'rules' =>  'trim|required|valid_email'
+            'rules' =>  'trim|required|valid_email|callback_email_check',
         ),
         array(
             'field' =>  'adminPassword',
