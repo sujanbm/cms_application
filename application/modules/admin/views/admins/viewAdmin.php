@@ -43,7 +43,11 @@
                 <td><?php if($admin->getAdminStatus()){?> <span class="badge bg-green">Active</span><?php }else{ ?> <span class="badge bg-red">Inactive</span> <?php  } ?></td>
                 <td><?php echo $admin->getRole()->getRoleName(); ?></td>
                 <td>
+                    <?php if ($this->session->userdata('logged_in')['roleId'] == 1){ ?>
                     <a href="<?php echo site_url('admin/editAdmin/') . $admin->getId(); ?>"><button type="button" class="btn btn-primary btn-flat">Edit</button></a>
+                    <?php }else{ ?>
+                    <a href=""><button type="button" class="btn btn-disabled btn-flat">Edit</button></a>
+                     <?php } ?>
                 </td>
             </tr>
         <?php endforeach; ?>

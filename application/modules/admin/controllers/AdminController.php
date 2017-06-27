@@ -16,7 +16,6 @@ class AdminController extends Admin_Controller {
 		$this->admin['admins'] = $this->doctrine->em->getRepository('admin\models\Admin')->findAll();
 		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findAll();
 		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
-
 		$this->load->library('form_validation');
 		$this->form_validation->CI =& $this;
 
@@ -29,20 +28,29 @@ class AdminController extends Admin_Controller {
 	}
 
 	public function createAdmin(){
-		$this->admin['roles'] = $this->doctrine->em->getRepository('admin\models\AdminRoles')->findAll();
-		$this->load->view('admins/createAdmin', $this->admin);
+		if ($this->session->userdata('logged_in')['roleId'] == 1){
+
+			$this->admin['roles'] = $this->doctrine->em->getRepository('admin\models\AdminRoles')->findAll();
+			$this->load->view('admins/createAdmin', $this->admin);
+
+		}else{
+			redirect(site_url('admin'));
+		}
 
 	}
 
 	public function editAdmin($id){
+			if ($this->session->userdata('logged_in')['roleId'] == 1){
+				$this->admin['admin'] = $this->doctrine->em->getRepository('admin\models\Admin')->find($id);
+				$this->admin['roles'] = $this->doctrine->em->getRepository('admin\models\AdminRoles')->findAll();
 
-			$this->admin['admin'] = $this->doctrine->em->getRepository('admin\models\Admin')->find($id);
-			$this->admin['roles'] = $this->doctrine->em->getRepository('admin\models\AdminRoles')->findAll();
-
-			if (!empty($this->admin['admin'])){
-				$this->load->view('admins/editAdmin', $this->admin);
+				if (!empty($this->admin['admin'])){
+					$this->load->view('admins/editAdmin', $this->admin);
+				}else{
+					$this->session->set_flashdata('errorMessage', 'Admin with that id does not exist');
+					redirect(site_url('admin'));
+				}
 			}else{
-				$this->session->set_flashdata('errorMessage', 'Admin with that id does not exist');
 				redirect(site_url('admin'));
 			}
 
@@ -180,15 +188,5 @@ class AdminController extends Admin_Controller {
 
 	}
 
-	public function name_check($str){
-
-		if ($str == "test" || $str == "Shayandra"){
-			$this->form_validation->set_message('name_check', 'The name '.$str.' is not allowed');
-			return FALSE;
-		}
-		else{
-			return TRUE;
-		}
-	}
 
 }

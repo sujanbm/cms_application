@@ -16,6 +16,7 @@
              <tr>
                  <th>Title</th>
                  <th>Category</th>
+                 <th>Author</th>
                  <th>Created At</th>
                  <th>Updated At</th>
                  <th>Actions</th>
@@ -25,6 +26,7 @@
                  <tr>
                      <td><?php echo $post->getPostTitle(); ?></td>
                      <td><?php echo $post->getCategories()->getCategoryName(); ?></td>
+                     <td><?php echo $post->getAuthor(); ?></td>
                      <td><?php echo $post->getCreatedAt();?></td>
                      <td>
                         <?php if($post->getUpdatedAt() != null){

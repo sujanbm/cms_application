@@ -14,6 +14,7 @@ class PostsController extends Admin_Controller {
 		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findBy( array(), array('createdAt' => 'DESC' ));
 
 		$this->load->library(array('pagination', 'form_validation'));
+		$this->form_validation->CI =& $this;
 
 	}
 
@@ -54,6 +55,7 @@ class PostsController extends Admin_Controller {
 			$post->setPostBody($this->input->post('postBody'));
 			$post->setCreatedAt();
 			$post->setCategories($this->doctrine->em->getRepository('cms\models\Categories')->find($this->input->post('categories')));
+			$post->setAuthor($this->session->userdata('logged_in')['name']);
 
 			if ($_FILES['file']['name'] != null) {
 				$post->setPhotoPath($this->fileUpload('file'));

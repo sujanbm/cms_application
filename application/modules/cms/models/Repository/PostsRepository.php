@@ -63,7 +63,7 @@ class PostsRepository extends EntityRepository {
         }
     }
 
-        public function fetch_users($limit, $start){
+        public function fetch_users($limit=null, $start=null){
 
             $qb = $this->getEntityManager()->createQueryBuilder();
             $qb ->  select('p')
@@ -71,7 +71,7 @@ class PostsRepository extends EntityRepository {
                 ->  orderBy('p.id', 'DESC')
                 ->  setFirstResult($start)
                 ->  setMaxResults($limit);
-                
+
             $post = $qb->getQuery()->getResult();
 
             if($post != null){

@@ -64,6 +64,14 @@
     private $photoPath;
 
     /**
+    * @var string $author
+    *
+    * @ORM\Column(name="author", type="string", length = 255, nullable=false)
+    */
+
+    private $author;
+
+    /**
    * Many Posts have One Category.
    * @ORM\ManyToOne(targetEntity="Categories", inversedBy="posts")
    * @ORM\JoinColumn(name="categoriesId", referencedColumnName="id", nullable=false)
@@ -145,6 +153,18 @@
 
         return $this->photoPath;
 
+    }
+
+    public function setAuthor($name){
+
+        $this->author = $name;
+
+    }
+
+    public function getAuthor(){
+
+        return $this->author;
+        
     }
 
   }

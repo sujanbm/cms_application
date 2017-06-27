@@ -114,17 +114,19 @@
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-users"></i>
-                                <span>Admins</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?php echo site_url('admin/createAdmin/') ?>"><i class="fa fa-angle-double-right"></i>Create Admins</a></li>
-                                <li><a href="<?php echo site_url('admin/') ?>"><i class="fa fa-angle-double-right"></i> View Admins</a></li>
-                            </ul>
-                        </li>
+                        <?php if ($this->session->userdata('logged_in')['roleId'] == 1): ?>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-users"></i>
+                                    <span>Admins</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="<?php echo site_url('admin/createAdmin/') ?>"><i class="fa fa-angle-double-right"></i>Create Admins</a></li>
+                                    <li><a href="<?php echo site_url('admin/') ?>"><i class="fa fa-angle-double-right"></i> View Admins</a></li>
+                                </ul>
+                            </li>
+                        <?php endif; ?>
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa  fa-pencil"></i>

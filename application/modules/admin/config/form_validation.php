@@ -6,7 +6,7 @@ $config = array(
         array(
             'field' =>  'adminName',
             'label' =>  'Name',
-            'rules' =>  'required|callback_name_check',
+            'rules' =>  'required',
         ),
         array(
             'field' =>  'adminEmail',

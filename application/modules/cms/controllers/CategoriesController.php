@@ -14,6 +14,7 @@ class CategoriesController extends Admin_Controller {
 		$this->admin['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null));
 		$this->admin['posts'] = $this->doctrine->em->getRepository('cms\models\Posts')->findAll();
 		$this->load->library(array('pagination', 'form_validation'));
+		$this->form_validation->CI =& $this;
 
 	}
 	public function index(){

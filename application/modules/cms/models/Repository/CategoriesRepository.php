@@ -63,36 +63,7 @@
 
 
             $result = $qb->getQuery()->getResult();
-
-            if ($result != null){
-                // foreach($result as $r){
-                //     $posts = $r->getPosts();
-                //     if ($posts->count() > 0){
-                //         foreach($posts as $post){
-                //                 $c['id'] = $post->getId();
-                //                 $c['categoryName'] = $r->getCategoryName();
-                //                 $c['photoPath'] = $post->getPhotoPath();
-                //                 $c['postTitle'] = $post->getPostTitle();
-                //                 $c['postBody'] = $post->getPostBody();
-                //                 $c['createdAt'] = $post->getCreatedAt();
-                //                 if($post->getUpdatedAt() != null){
-                //                   $c['updatedAt'] = $post->getUpdatedAt()->format('Y-m-d H:i:s');
-                //               }else {
-                //                   $c['updatedAt'] = $post->getUpdatedAt();
-                //               }
-                //                 $p[] = $c;
-                //         }
-                //     }
-                // }
-                // if (!empty($p)){
-                //     return $p;
-                // }else{
-                //     return $posts;
-                // }
-                return $result;
-            }else{
-                redirect(site_url('cms/categories'));
-            }
+            return $result;
         }
 
         public function getPostsFromCategory($id, $per_page = null, $page = null){
@@ -125,21 +96,7 @@
                 // echo $qb->getQuery()->getSQL();
 
             $result = $qb->getQuery()->getResult();
-
-            if ($result != null){
-                // foreach($result as $r){
-                //     $posts = $r->getPosts();
-                //     if ($posts->count() > 0){
-                //         foreach($posts as $post){
-                //             $p[] = $post;
-                //         }
-                //     }
-                // }
-                // return $p;
-                return $result;
-            }else{
-                redirect(site_url('cms/categories/'));
-            }
+            return $result;
         }
 
 
@@ -163,7 +120,36 @@
         // }
         // }
 
+
+
+        // if ($result != null){
+        //     // foreach($result as $r){
+        //     //     $posts = $r->getPosts();
+        //     //     if ($posts->count() > 0){
+        //     //         foreach($posts as $post){
+        //     //                 $c['id'] = $post->getId();
+        //     //                 $c['categoryName'] = $r->getCategoryName();
+        //     //                 $c['photoPath'] = $post->getPhotoPath();
+        //     //                 $c['postTitle'] = $post->getPostTitle();
+        //     //                 $c['postBody'] = $post->getPostBody();
+        //     //                 $c['createdAt'] = $post->getCreatedAt();
+        //     //                 if($post->getUpdatedAt() != null){
+        //     //                   $c['updatedAt'] = $post->getUpdatedAt()->format('Y-m-d H:i:s');
+        //     //               }else {
+        //     //                   $c['updatedAt'] = $post->getUpdatedAt();
+        //     //               }
+        //     //                 $p[] = $c;
+        //     //         }
+        //     //     }
+        //     // }
+        //     // if (!empty($p)){
+        //     //     return $p;
+        //     // }else{
+        //     //     return $posts;
+        //     // }
+        //     return $result;
     }
+
 
 
 ?>
