@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>SOLID - Bootstrap 3 Theme</title>
+    <title>CMS</title>
+    <link rel="icon" type="image/gif" href="<?php echo base_url()?>/uploads/front.png" />
 
     <!-- Bootstrap core CSS -->
     <link href="<?php echo base_url(); ?>/assets/css/bootstrap.css" rel="stylesheet">
@@ -29,11 +30,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="<?php echo site_url('cms/front'); ?>">CMS</a>
+          <a class="navbar-brand" href="<?php echo site_url('cms/front/posts'); ?>">CMS</a>
         </div>
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
-            <li><a href="<?php echo site_url('cms/front'); ?>">Home</a></li>
+            <li><a href="<?php echo site_url('cms/front/posts'); ?>">Home</a></li>
             <li><a href="<?php echo site_url('cms/front/posts') ?>">Posts</a></li>
             <?php foreach ($categories as $category): ?>
                 <?php if ($category->getCategory()->count() > 0) {?>

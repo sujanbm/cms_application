@@ -36,9 +36,8 @@
                                 <?php }else{?>
                                   <img src="<?php echo base_url(); ?>/uploads/facebook-avatar.jpg" class="img-responsive">
                                <?php }
-                            }else{?>
-                              <img src="<?php echo base_url(); ?>/uploads/facebook-avatar.jpg" class="img-responsive">
-                           <?php } ?>
+                            }
+						 ?>
                         </p>
                         <a href="<?php echo site_url('cms/front/singlePost/') . $post->getId(); ?>"><h3 class="ctitle"><?php echo $post->getPostTitle(); ?></h3></a>
                         <p><csmall>Posted: <?php echo $post->getCreatedAt(); ?></csmall> | <csmall2>By: <?php echo $post->getAuthor(); ?></csmall2></p>

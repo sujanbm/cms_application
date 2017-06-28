@@ -29,14 +29,14 @@
                                 if($post->getPhotoPath() != null){
                                     $path = $post->getPhotoPath();
                                     if(file_exists(FCPATH."uploads/posts/".$path)){?>
-                                    <a href=""><img src="<?php echo base_url();?>/uploads/posts/<?php echo $path?>" alt="Popular Post" height="70px" width="70px"></a>
+                                    <a href="<?php echo site_url('cms/front/singlePost/') . $post->getId();  ?>"><img src="<?php echo base_url();?>/uploads/posts/<?php echo $path?>" alt="Popular Post" height="70px" width="70px"></a>
                                     <?php }else{?>
-                                      <a href=""><img src="<?php echo base_url(); ?>/uploads/facebook-avatar.jpg" alt="Popular Post" height="70px" width="70px"></a>
+                                      <a href="<?php echo site_url('cms/front/singlePost/') . $post->getId();  ?>"><img src="<?php echo base_url(); ?>/uploads/facebook-avatar.jpg" alt="Popular Post" height="70px" width="70px"></a>
                                    <?php }
                                 }else{?>
-                                  <a href=""><img src="<?php echo base_url(); ?>/uploads/facebook-avatar.jpg" alt="Popular Post" height="70px" width="70px"></a>
+                                  <a href="<?php echo site_url('cms/front/singlePost/') . $post->getId();  ?>"><img src="<?php echo base_url(); ?>/uploads/facebook-avatar.jpg" alt="Popular Post" height="70px" width="70px"></a>
                                <?php } ?>
-                                <p><a href="#"><?php echo $post->getPostTitle(); ?></a></p>
+                                <p><a href="<?php echo site_url('cms/front/singlePost/') . $post->getId();  ?>"><?php echo $post->getPostTitle(); ?></a></p>
                                 <em>Posted on <?php echo $post->getCreatedAt(); ?></em>
                             </li>
                         <?php endforeach; ?>

@@ -17,16 +17,31 @@
                <input type="text" class="form-control" id="postTitle" name="postTitle" value="<?php echo set_value('postTitle') ?>" required>
                <span><?php echo form_error('postTitle') ?></span>
            </div>
-           <div class="form-group">
+           <!-- <div class="form-group">
                <label for="postBody">Post Description</label>
                <textarea name="postBody" class="form-control" rows="8" cols="80" required><?php echo set_value('postBody') ?></textarea>
                <span><?php echo form_error('postBody') ?></span>
+           </div> -->
+           <div class="form-group">
+               <div class='box box-info'>
+                   <div class='box-header'>
+                       <label for="postBody">Post Description</label>
+                       <div class="pull-right box-tools">
+                           <button class="btn btn-info btn-sm" data-widget='collapse' data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                           <button class="btn btn-info btn-sm" data-widget='remove' data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+                       </div>
+                   </div>
+                   <div class='box-body pad'>
+                           <textarea id="editor1" name="postBody" rows="10" cols="80">
+                               <?php echo set_value('postBody') ?>
+                           </textarea>
+                   </div>
+                   <span><?php echo form_error('postBody') ?></span>
+               </div>
            </div>
            <div class="form-group">
                <label for="categories">Category</label>
                <select class="form-control" name="categories" value"<?php echo set_value('categories') ?>">
-                   <!-- <option value="1">Sports</option>
-                   <option value="2">Finance</option> -->
                    <?php if( !empty($categories)) foreach ($categories as $category) { ?>
                         <option value="<?php echo $category->getId(); ?>"> <?php echo $category->getCategoryName(); ?> </option>
                             <?php if ($category->getCategory()->count() >0): ?>

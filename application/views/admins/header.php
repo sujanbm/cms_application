@@ -3,6 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>CMS | Dashboard</title>
+        <link rel="icon" type="image/gif" href="<?php echo base_url()?>/uploads/admin.png" />
+
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- bootstrap 3.0.2 -->
         <link href="<?php echo base_url(); ?>/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -53,7 +55,7 @@
                                      <?php } ?>
                                     <p>
                                         <?php echo $this->session->userdata('logged_in')['name']; ?>
-                                        <small><?php echo $this->session->userdata('logged_in')['date']; ?></small>
+                                        <small><?php echo "Admin since: " .  $this->session->userdata('logged_in')['date']; ?></small>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->

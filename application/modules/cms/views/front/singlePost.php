@@ -29,13 +29,12 @@
                         <?php }else{?>
                           <img src="<?php echo base_url(); ?>/uploads/facebook-avatar.jpg" class="img-responsive">
                        <?php }
-                    }else{?>
-                      <img src="<?php echo base_url(); ?>/uploads/facebook-avatar.jpg" class="img-responsive">
-                   <?php } ?>
+
+                    } ?>
 				</p>
-		 		<h3 class="ctitle">$post->getPostTitle();</h3>
+		 		<h3 class="ctitle"><?php echo $post->getPostTitle(); ?></h3>
 		 		<p><csmall>Posted: <?php echo $post->getCreatedAt(); ?></csmall> | <csmall2>By: <?php echo $post->getAuthor(); ?></csmall2></p>
-		 		<p><?php echo $post->getPostBody(); ?></p>
+		 		<p align="justify"><?php echo $post->getPostBody(); ?></p>
 
 		 		<!-- <h6>SHARE:</h6>
 		 		<p class="share">

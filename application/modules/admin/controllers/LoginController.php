@@ -35,20 +35,25 @@ class LoginController extends Front_Controller {
         if (!empty($admin)){
 
             if (password_verify($password, $admin->getAdminPassword())){
+                if ($admin->getAdminStatus() == 1){
+                    $logged_in = array(
+                        'id'        =>  $admin->getId(),
+                        'email'     =>  $admin->getAdminEmail(),
+                        'name'      =>  $admin->getAdminName(),
+                        'photo'     =>  $admin->getAdminPhoto(),
+                        'roleId'    =>  $admin->getRole()->getId(),
+                        'roleName'  =>  $admin->getRole()->getRoleName(),
+                        'date'      =>  $admin->getCreatedAt(),
+                     );
 
-                $logged_in = array(
-                    'id'        =>  $admin->getId(),
-                    'email'     =>  $admin->getAdminEmail(),
-                    'name'      =>  $admin->getAdminName(),
-                    'photo'     =>  $admin->getAdminPhoto(),
-                    'roleId'    =>  $admin->getRole()->getId(),
-                    'roleName'  =>  $admin->getRole()->getRoleName(),
-                    'date'      =>  $admin->getCreatedAt(),
-                 );
+                     $this->session->set_userdata('logged_in', $logged_in);
+                     $this->session->set_flashdata('message', 'Welcome '.$admin->getAdminName());
+                     redirect('admin');
+                }else{
+                    $this->session->set_flashdata('errorMessage', 'You have been disabled!!! <br> Please contact the main admin.');
+                    redirect('admin/login');
+                }
 
-                 $this->session->set_userdata('logged_in', $logged_in);
-                 $this->session->set_flashdata('message', 'Welcome '.$admin->getAdminName());
-                 redirect('admin');
             }else{
                 $this->session->set_flashdata('errorMessage', 'Wrong Password');
                 redirect('admin/login');
