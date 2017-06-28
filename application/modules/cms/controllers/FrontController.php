@@ -71,6 +71,18 @@ class FrontController extends Front_Controller {
 
     }
 
+    public function singlePost($id){
+
+        $this->post['post'] = $this->doctrine->em->getRepository('cms\models\Posts')->find($id);
+
+        if ($this->post['post'] != null){
+            $this->load->view('front/singlePost', $this->post);
+        }else{
+            $this->session->set_message('errorMessage', 'The post does not exist');
+            redirect('cms/front/posts');
+        }
+    }
+
 	// public function category($id){
 	// 	$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
     //
