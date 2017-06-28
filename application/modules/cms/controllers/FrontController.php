@@ -29,7 +29,7 @@ class FrontController extends Front_Controller {
 	 */
 	public function index()
 	{
-
+        $this->posts();
 	}
 
     public function posts(){
@@ -83,20 +83,4 @@ class FrontController extends Front_Controller {
         }
     }
 
-	// public function category($id){
-	// 	$posts['categories'] = $this->doctrine->em->getRepository('cms\models\Categories')->findBy(array('subCategory' => null ));
-    //
-	// 	$config['base_url'] = site_url('cms/category/').$id;
-	// 	$config['per_page'] = 4;
-	// 	$config['total_rows'] = count($this->doctrine->em->getRepository('cms\models\Categories')->getPosts($id));
-	// 	$config['uri-segment'] = 5;
-    //
-	// 	$this->pagination->initialize($config);
-    //
-	// 	$posts['links'] = $this->pagination->create_links();
-	// 	$page = $this->input->get('per_page')?:0;
-	// 	$posts['list'] = $this->doctrine->em->getRepository('cms\models\Categories')->getPostsFromCategory($id, $config['per_page'], $page);
-	// 	$this->load->view('front/viewPost', $posts);
-    //
-	// }
 }
