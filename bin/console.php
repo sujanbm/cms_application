@@ -17,7 +17,7 @@ define('ENVIRONMENT', 'development');
 define('APPPATH', 'application/');
 define('EXT', '.php');
 
-require_once APPPATH."libraries/doctrine.php";
+require_once APPPATH."libraries/Doctrine.php";
 
 $doctrine = new Doctrine();
 
